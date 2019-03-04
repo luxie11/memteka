@@ -1,0 +1,53 @@
+:root{
+  /*Pagrindines spalvos duomenys --pagrindine-spalva:#fff*/
+  --body-color:#fff;
+  --testas:red;
+}
+
+li{
+  text-decoration: none;
+  /*Nuimami taskiukai nuo li elementu, ul viduje */
+  list-style:none;
+}
+
+html,body{
+   font-family: sans-serif;
+   background-color:var(--body-color);
+   margin: 0;
+}
+
+#header{
+   width: 100%;
+   /*Si parametra keisti, jei meniu slepiasi po divais. 
+     Maksimalus 999*/
+   z-index: 50;
+   /*Sis parametras yra normali pozija. Jei nustatomas 
+     left:20px, tai ir bus 20px itraukta nuo kaires */
+   position: relative;
+}
+.top-navigation{
+  background-color: #fff;
+}
+
+.nav-bar{
+  /*Navigation bar virsus, keiciamas aukstis,*/
+  height: 50px;
+}
+
+.nav-bar-item{
+  float: left;
+  color: orange;
+  text-align: center;
+  padding: 15px 17px;
+  text-decoration: none;
+  font-size:19px;
+}
+
+.nav-bar-item:hover{
+  background-color: black;
+  color:white;
+}
+
+#wrapper{
+
+}

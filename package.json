@@ -1,0 +1,27 @@
+{
+  "name": "memteka",
+  "version": "1.0.0",
+  "description": "Internetinis puslapis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luxie11/memteka.git"
+  },
+  "keywords": [
+    "meme"
+  ],
+  "author": "IFB-6",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luxie11/memteka/issues"
+  },
+  "homepage": "https://github.com/luxie11/memteka#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.13",
+    "run-script-os": "^1.0.2"
+  }
+}
+
