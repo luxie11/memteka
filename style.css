@@ -1,6 +1,8 @@
 :root{
   /*Pagrindines spalvos duomenys --pagrindine-spalva:#fff*/
-  --body-color:#fff;
+  --body-color:#E0E0E0;
+  --navigation-color:#0099cc;
+  --navigation-hover:#056495;
   --testas:red;
 }
 
@@ -24,30 +26,45 @@ html,body{
    /*Sis parametras yra normali pozija. Jei nustatomas 
      left:20px, tai ir bus 20px itraukta nuo kaires */
    position: relative;
-}
-.top-navigation{
-  background-color: #fff;
+   background-color: var(--navigation-color);
+   height: 100px;
+   /*centravimas*/
+   display: flex;
+   align-items: center;
 }
 
-.nav-bar{
+.nav-header{
   /*Navigation bar virsus, keiciamas aukstis,*/
-  height: 50px;
+}
+
+.navigation-items{
+  float: left;
+  margin: 0 10%;
 }
 
 .nav-bar-item{
-  float: left;
-  color: orange;
+  display: inline;
   text-align: center;
-  padding: 15px 17px;
+  padding: 18px 17px;
   text-decoration: none;
   font-size:19px;
 }
 
-.nav-bar-item:hover{
-  background-color: black;
+.nav-bar-item > a {
+  text-decoration: none;
   color:white;
 }
 
-#wrapper{
+.nav-bar-item > a:hover{
+  color:var(--navigation-hover);
+}
 
+#wrapper{
+  margin: 0;
+}
+
+#site-logo{
+  float: left;
+  width: 100px;
+  height: 100px;
 }
