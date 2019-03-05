@@ -16,6 +16,11 @@ html,body{
    font-family: sans-serif;
    background-color:var(--body-color);
    margin: 0;
+   height:100%;
+}
+
+main{
+  margin-top: 65px;
 }
 
 #header{
@@ -25,12 +30,13 @@ html,body{
    z-index: 50;
    /*Sis parametras yra normali pozija. Jei nustatomas 
      left:20px, tai ir bus 20px itraukta nuo kaires */
-   position: relative;
    background-color: var(--navigation-color);
-   height: 100px;
+   height: 60px;
    /*centravimas*/
    display: flex;
    align-items: center;
+   position: fixed;
+   top: 0;
 }
 
 .nav-header{
@@ -40,6 +46,7 @@ html,body{
 .navigation-items{
   float: left;
   margin: 0 10%;
+  width: 60%;
 }
 
 .nav-bar-item{
@@ -47,12 +54,12 @@ html,body{
   text-align: center;
   padding: 18px 17px;
   text-decoration: none;
-  font-size:19px;
+  font-size:17px;
 }
 
 .nav-bar-item > a {
   text-decoration: none;
-  color:white;
+  color:white; 
 }
 
 .nav-bar-item > a:hover{
@@ -61,10 +68,139 @@ html,body{
 
 #wrapper{
   margin: 0;
+  width: 100%;
 }
 
 #site-logo{
   float: left;
   width: 100px;
-  height: 100px;
+}
+
+.header-icon{
+  color: white; 
+  font-size: 30px; 
+  float: right;
+}
+
+.header-icon:hover{
+  color:var(--navigation-hover);
+}
+
+.nav-social-icons{
+  float:right;
+  width: 10%;
+}
+
+.meme-post{
+  background-color: white;
+  width: 68%;
+  min-height: 300px;
+  margin: 10px 20px;
+  float: left;
+  padding: 3%;
+  position: relative;
+}
+
+.meme-title{
+  margin-top: 0;
+  text-align: justify;
+}
+
+#sidebar{
+  width: 20%;
+  height: auto;
+  background-color: white;
+  float: right;
+  margin-right: 5%;
+  top: 60px;
+  position: fixed;
+  right: 0;
+  margin-top: 15px;
+}
+
+.container{
+  margin: 10px 5%;
+}
+
+.meme-image, .meme-image > img{
+  float: right;
+  min-height: 320px;
+  width: 450px;
+}
+
+.meme-content{
+  display: block;
+  float: left;
+  width: 40%;
+}
+.control-button > i{
+  color:var(--navigation-color);
+  font-size:25px;
+  z-index: 3;
+}
+
+.meme-buttons{
+  height: 45px;
+  width: 180px;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 4%;
+}
+.control-button{
+  float: left;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--navigation-color);
+  margin-right: 10px;
+
+
+}
+.post-meta{
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.control-button > i:hover{
+  color: white;
+}
+.control-button:hover{
+  border: 2px solid var(--navigation-hover);
+  background-color: var(--navigation-hover);
+}
+
+#sidebar-header{
+  width: 100%;
+  background-color: var(--navigation-color);
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#sidebar-title{
+  color: white;
+  font-size: 22px;
+}
+
+.category-list{
+  padding: 0;
+  margin: 0;
+}
+
+.category-item{
+  height: auto;
+  border-bottom: 2px solid var(--body-color);
+  padding: 10px;
+}
+
+.category-item > a {
+  width: 100%;
+  font-size: 17px;
+}
+
+.category-item > a:hover{
+  color: var(--navigation-color);
 }
