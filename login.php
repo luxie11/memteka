@@ -49,17 +49,17 @@
         </style>
     </head>
     <body>
-			<form method='post'>
+			<form method='post' action=>
 				<center>
 				<div id='didelis_staciakampis'>
 					<div id='staciakampis_viduje'>
 						<label style="float: left">Prisijungimo vardas:</label>
-						<input id='ivedimo_laukelis' name='prisijungimo_vardas' type='text' maxlength="32" required>
+						<input id='ivedimo_laukelis' name='vartotojo_vardas' type='text' maxlength="32" required>
 						<br><br>
 						<label style="float: left">Slaptažodis:</label>
 						<input id='ivedimo_laukelis' name='slaptazodis' type='password' maxlength="32" required>
 						<br><br><br>
-						<input id="prisijungti_mygtukas" type="button" name="prisijungti" type="submit" value="Prisijungti">
+						<input id="prisijungti_mygtukas" name="prisijungti" type="submit" value="Prisijungti">
 						</div>
 				</div>
 				</center>
@@ -67,3 +67,35 @@
 		
     </body>
 </html>
+
+<?php
+	$dbc=mysqli_connect("localhost", "root", "", "memteka");  // Laikinas prisijungimas
+	
+	if(!$dbc){
+		die("Negaliu prisijungti prie MySQL:".mysqli_error($dbc));
+		
+	}
+	
+
+	
+	$vartotojo_vardas = "";
+	$slaptazodis = "";
+	
+	if (isset($_POST['prisijungti'])) {
+		$vartotojo_vardas = mysqli_real_escape_string($dbc, $_POST['vartotojo_vardas']);
+		$slaptazodis = mysqli_real_escape_string($dbc, $_POST['slaptazodis']);
+			echo $vartotojo_vardas;
+	
+	
+	$query = "SELECT * FROM vartotojai WHERE vartotojo_vardas='$vartotojo_vardas' and slaptazodis='$slaptazodis'";
+	$result = mysqli_query($dbc, $query);
+
+	
+	if (mysqli_num_rows($result) == 1) { // jeigu rado viena eilute, kurios username ir slaptazodis sutampa su ivestais
+		header("Location: index.html");
+		
+	} else {
+		header("Location: login.php");
+	}
+}
+?>
