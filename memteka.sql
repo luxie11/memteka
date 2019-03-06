@@ -82,7 +82,7 @@ CREATE TABLE `memai` (
 --
 
 INSERT INTO `memai` (`id`, `pavadinimas`, `nuoroda`, `tasku_kiekis`, `komentaru_kiekis`, `data`, `fk_vartotojo_vardas`) VALUES
-(1, 'Pirmasis memas', '/img/memas.jpg', 0, 0, '2019-03-06 20:15:24', 'admin');
+(1, 'Pirmasis memas', '/img/memas.jpg', 0, 1, '2019-03-06 20:15:24', 'admin');
 
 -- --------------------------------------------------------
 
