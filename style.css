@@ -41,12 +41,17 @@ main{
 }
 
 footer{
+<<<<<<< HEAD
   position: relative;
+=======
+  position: absolute;
+>>>>>>> 25eb5f4df577c2e31f6278aec85bedb06d585d07
   left: 0;
   bottom: 0;
   width: 100%;
   height: 50px;
   display: flex;
+<<<<<<< HEAD
 }
 
 .footer-style{
@@ -66,6 +71,27 @@ footer{
   margin: 5%;
 }
 
+=======
+}
+
+.footer-style{
+  background-color: red;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row-container{
+  display:-ms-flexbox;
+  display:flex;
+  -ms-flex-wrap:wrap;
+  flex-wrap:wrap;
+  height: 100%;
+  margin: 5%;
+}
+
+>>>>>>> 25eb5f4df577c2e31f6278aec85bedb06d585d07
 
 #header{
    width: 100%;
@@ -278,4 +304,8 @@ footer{
 .category-item:hover{
   background-color: red;
   color:white;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 25eb5f4df577c2e31f6278aec85bedb06d585d07
