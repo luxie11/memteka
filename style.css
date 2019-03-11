@@ -4,6 +4,11 @@
   --navigation-color:#0099cc;
   --navigation-hover:#056495;
   --testas:red;
+  --div-color:white;
+}
+
+*, ::after, ::before {
+  box-sizing: border-box;
 }
 
 li{
@@ -12,16 +17,36 @@ li{
   list-style:none;
 }
 
-html,body{
+html{
+  margin: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body{
    font-family: sans-serif;
    background-color:var(--body-color);
    margin: 0;
-   height:100%;
+   min-height: 100%;
+   position:absolute; 
+   top:0; 
+   bottom:0; 
+   right:0;
 }
 
 main{
-  margin-top: 65px;
+  height: 100%;
 }
+
+.row-container{
+  display:-ms-flexbox;
+  display:flex;
+  -ms-flex-wrap:wrap;
+  flex-wrap:wrap;
+  height: 100%;
+  margin: 5%;
+}
+
 
 #header{
    width: 100%;
@@ -37,16 +62,12 @@ main{
    align-items: center;
    position: fixed;
    top: 0;
-}
-
-.nav-header{
-  /*Navigation bar virsus, keiciamas aukstis,*/
+   padding:0 5.8%;
 }
 
 .navigation-items{
   float: left;
-  margin: 0 10%;
-  width: 60%;
+  width: 80%;
 }
 
 .nav-bar-item{
@@ -66,14 +87,22 @@ main{
   color:var(--navigation-hover);
 }
 
+.sidebar-column, .main-column{
+  position:relative;
+  width:100%;
+  padding-left:15px;
+  padding-right: 15px; 
+}
+
 #wrapper{
   margin: 0;
   width: 100%;
+  height: 100%;
 }
 
 #site-logo{
   float: left;
-  width: 100px;
+  width: 200px;
 }
 
 .header-icon{
@@ -92,13 +121,14 @@ main{
 }
 
 .meme-post{
-  background-color: white;
-  width: 68%;
-  min-height: 300px;
-  margin: 10px 20px;
+  background-color: var(--div-color);
+  min-height: 360px;
   float: left;
-  padding: 3%;
   position: relative;
+  box-shadow: 0 8px 7px -3px gray;
+  width: 100%;
+  padding: 3% 4% 2% 4%;
+  margin-bottom: 25px;
 }
 
 .meme-title{
@@ -107,68 +137,84 @@ main{
 }
 
 #sidebar{
-  width: 20%;
+  width:  100%;
   height: auto;
-  background-color: white;
-  float: right;
-  margin-right: 5%;
-  top: 60px;
-  position: fixed;
-  right: 0;
-  margin-top: 15px;
+  background-color: var(--div-color);
+  float: left;
 }
 
-.container{
-  margin: 10px 5%;
+.main-column{
+  height: 100%;
+  -ms-flex:0 0 50%;
+  flex:0 0 50%;
+  max-width:50%;
 }
 
-.meme-image, .meme-image > img{
-  float: right;
-  min-height: 320px;
-  width: 450px;
+.meme-image, .meme-image > img, .meme-image > video{
+  height: 100%;
+  width: 100%;
 }
 
 .meme-content{
   display: block;
-  float: left;
-  width: 40%;
+  width: 100%;
 }
+
 .control-button > i{
   color:var(--navigation-color);
   font-size:25px;
   z-index: 3;
 }
 
-.meme-buttons{
-  height: 45px;
-  width: 180px;
-  position: absolute;
-  bottom: 0;
-  margin-bottom: 4%;
+.right-button{
+  float: right;
 }
+
+.center-button{
+  margin: 0 20px;
+}
+
+.meme-buttons{
+  height: 50px;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+}
+
 .control-button{
-  float: left;
-  width: 40px;
-  height: 40px;
+  width: 33.33%;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 2px solid var(--navigation-color);
-  margin-right: 10px;
-
-
 }
+
 .post-meta{
   font-size: 17px;
   font-weight: 500;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .control-button > i:hover{
   color: white;
 }
+
 .control-button:hover{
   border: 2px solid var(--navigation-hover);
   background-color: var(--navigation-hover);
+}
+
+.sidebar-column{
+  -ms-flex:0 0 25%;
+  flex:0 0 25%;
+  max-width:25%;
 }
 
 #sidebar-header{
@@ -203,4 +249,13 @@ main{
 
 .category-item > a:hover{
   color: var(--navigation-color);
+}
+
+.point{
+  width: 110px;
+}
+
+.category-item:hover{
+  background-color: red;
+  color:white;
 }
