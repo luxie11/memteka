@@ -205,7 +205,6 @@ footer{
 .control-button > i{
   color:var(--navigation-color);
   font-size:25px;
-  z-index: 3;
 }
 
 .right-button{
@@ -232,6 +231,7 @@ footer{
   justify-content: center;
   align-items: center;
   border: 2px solid var(--navigation-color);
+  cursor: pointer;
 }
 
 .post-meta{
