@@ -45,7 +45,7 @@
                     <div class="meme-upload">
                         <form action="upload_meme.php" method="post" enctype="multipart/form-data">
                             Pasirinkite nuotrauką, kurią norite įkelti:<br>
-                            <input type="file" name="fileToUpload" id="fileToUpload"><br>
+                            <input type="file" name="fileToUpload" id="fileToUpload" accept="image/png, image/jpeg, image/jpg"><br>
                             Nuotraukos pavadinimas:
                             <input type="text" name="pavadinimas" id="pavadinimas" maxlength="255"><br>
                             <input type="submit" value="Įkelti memą" name="submit">
