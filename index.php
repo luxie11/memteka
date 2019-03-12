@@ -47,15 +47,16 @@
 						$query = "SELECT * FROM memai";
 						$result = mysqli_query($dbc, $query);
 						while($row=mysqli_fetch_assoc($result))
-						{	
+						{
+							$id = $row['id']; // iskart prisiskiriame memo ID (reikalinga komentarams)
 					?>
                         <div class="meme-post">
                                 <div class="meme-content">
-									<h3 class="meme-title">
-                                    <?php
-										echo $row['pavadinimas'];
-									?>
-									</h3>
+					<h3 class="meme-title">
+                                    		<?php
+							echo $row['pavadinimas'];
+						?>
+					</h3>
                                 </div>
                                 <div class="meme-image">
                                     <img src="<?php echo $row['nuoroda'];?>" alt="Smiley face">
@@ -82,8 +83,14 @@
                                     <div class="control-button center-button">
                                         <i class="fas fa-arrow-down"></i>
                                     </div>
-                                    <div class="control-button right-button" onclick="google.com">
+                                    <div class="control-button right-button" id="komentarai-<?php echo $id; ?>">
                                         <i class="fas fa-comment"></i>
+										<script>
+										document.getElementById("komentarai-<?php echo $id; ?>").onclick = function(){
+											// paspaudus ant komentaro mygtuko, nukreipia i komentarus
+											window.location.href = 'comments.php?postId=<?php echo $id; ?>';
+										}
+										</script>
                                     </div>
                                 </div>
                         </div>
