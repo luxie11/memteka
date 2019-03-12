@@ -231,7 +231,7 @@ footer{
   align-items: center;
 }
 
-.control-button > i:hover{
+.control-button:hover i{
   color: white;
 }
 
