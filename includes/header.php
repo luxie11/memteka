@@ -1,6 +1,7 @@
 <header id="header">
             <div id="site-logo">
-                <img style="width: 200px;" src="images/logo.png" alt="Memteka"/>
+                <a href="index.php">
+                <img style="width: 200px;" src="images/logo.png" alt="Memteka"/></a>
             </div>
             <div class="navigation-items">
                 <ul class="nav-header">
@@ -20,6 +21,12 @@
                         <a href="#">
                             <i class="fas fa-arrow-up"></i>
                             Kylantys
+                        </a>
+                    </li>
+					<li class="nav-bar-item">
+                        <a href="upload.php">
+                            <i class="fas fa-plus-square"></i>
+                            Pridėti memą
                         </a>
                     </li>
                 </ul>
