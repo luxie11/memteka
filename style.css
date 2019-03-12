@@ -3,6 +3,7 @@
   --body-color:#E0E0E0;
   --navigation-color:#0099cc;
   --navigation-hover:#056495;
+  --footer-color:#054095;
   --testas:red;
   --div-color:white;
 }
@@ -41,21 +42,16 @@ main{
 }
 
 footer{
-<<<<<<< HEAD
   position: relative;
-=======
-  position: absolute;
->>>>>>> 25eb5f4df577c2e31f6278aec85bedb06d585d07
   left: 0;
   bottom: 0;
   width: 100%;
   height: 50px;
   display: flex;
-<<<<<<< HEAD
 }
 
 .footer-style{
-  background-color: red;
+  background-color: var(--footer-color);
   color: white;
   display: flex;
   justify-content: center;
@@ -71,17 +67,6 @@ footer{
   margin: 5%;
 }
 
-=======
-}
-
-.footer-style{
-  background-color: red;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .row-container{
   display:-ms-flexbox;
   display:flex;
@@ -91,7 +76,6 @@ footer{
   margin: 5%;
 }
 
->>>>>>> 25eb5f4df577c2e31f6278aec85bedb06d585d07
 
 #header{
    width: 100%;
@@ -176,6 +160,19 @@ footer{
   margin-bottom: 25px;
 }
 
+.meme-upload{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--div-color);
+  min-height: 360px;
+  position: relative;
+  box-shadow: 0 8px 7px -3px gray;
+  width: 100%;
+  font-size: 1.5em;
+  padding: 25px;
+}
+
 .meme-title{
   margin-top: 0;
   text-align: justify;
@@ -247,7 +244,7 @@ footer{
   align-items: center;
 }
 
-.control-button > i:hover{
+.control-button:hover i{
   color: white;
 }
 
@@ -302,10 +299,6 @@ footer{
 }
 
 .category-item:hover{
-  background-color: red;
+  background-color: var(--navigation-hover);
   color:white;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 25eb5f4df577c2e31f6278aec85bedb06d585d07

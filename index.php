@@ -77,11 +77,12 @@
                                 <div class="meme-buttons">
                                     <div class="control-button">
                                         <i class="fas fa-arrow-up"></i>
+										
                                     </div>
                                     <div class="control-button center-button">
                                         <i class="fas fa-arrow-down"></i>
                                     </div>
-                                    <div class="control-button right-button">
+                                    <div class="control-button right-button" onclick="google.com">
                                         <i class="fas fa-comment"></i>
                                     </div>
                                 </div>
