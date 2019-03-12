@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+
+
 $katalogas = "uploads/"; // nurodom kataloga, kuriame bus patalpintas failas
 $failas = $katalogas . basename($_FILES["fileToUpload"]["name"]); // aprasomas kelias iki failo
 $uploadOk = 1; // pradzioje klaidu nera, todel 1 (kai bus klaida bus 0)
