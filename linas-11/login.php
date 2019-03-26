@@ -13,7 +13,7 @@
         </style>
     </head>
     <body>
-			<form method='post' action=>
+			<form method='post' action="">
 				<div id='login-form'>
 					<div id='form-inputs'>
 						<input id='input' name='vartotojo_vardas' placeholder="Prisijungimo vardas" type='text' maxlength="32" required>

@@ -5,7 +5,8 @@
     <title>Memteka</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <script async defer src="https://connect.facebook.net/lt_LT/sdk.js#xfbml=1&version=v3.2"></script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/lt_LT/sdk.js#xfbml=1&version=v3.2&appId=803435083363148&autoLogAppEvents=1"></script>
+
 </head>
 <body>
     <div id="wrapper">
@@ -28,17 +29,18 @@
                         <ul class="category-list">
                             <?php
 								$query = "SELECT * FROM kategorijos";
-								$result = mysqli_query($dbc, $query);
+                                $result = mysqli_query($dbc, $query);
+                                $categoriesArray = array();
 								while($row=mysqli_fetch_assoc($result))
-								{						
+								{			
+                                    array_push($categoriesArray, $row['pavadinimas']); 	
 							?>
-			   
 							<li class="category-item">
 								<a><?php echo $row['pavadinimas']; ?></a>
 							</li>
 							<?php
 								} // cia uzdarome category-item while cikla
-							?>
+                            ?>
                         </ul>
                     </aside>
                 </div>
@@ -76,11 +78,11 @@
                                     </a>
                                 </p>
                                 <div class="meme-buttons">
-                                    <div class="control-button">
+                                    <div class="control-button upvote">
                                         <i class="fas fa-arrow-up"></i>
 										
                                     </div>
-                                    <div class="control-button center-button">
+                                    <div class="control-button center-button downvote">
                                         <i class="fas fa-arrow-down"></i>
                                     </div>
                                     <div class="control-button right-button" id="komentarai-<?php echo $id; ?>">
@@ -99,7 +101,7 @@
 						?>
                 </div>
                 <div class="sidebar-column">
-                    <div style="height: 200px; background: white;"></div>
+                    <div class="fb-group" data-href="https://www.facebook.com/groups/ayearofrunning/" data-width="280" data-show-social-context="false" data-show-metadata="false"></div> <!-- REIKIA FB ! -->
                 </div>
             </div>
 			<?php
@@ -108,4 +110,8 @@
         </main>
     </div>
 </body>
+<script>
+    var categoriesArray = <?php echo json_encode($categoriesArray); ?>
+</script>
+<script src="js/memteka.js"></script>
 </html>

@@ -12,6 +12,12 @@
   box-sizing: border-box;
 }
 
+hr{
+  border: 0;
+  height: 0;
+  box-shadow: 0 0 10px 1px var(--navigation-color);
+}
+
 li{
   text-decoration: none;
   /*Nuimami taskiukai nuo li elementu, ul viduje */

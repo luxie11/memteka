@@ -67,16 +67,6 @@ footer{
   margin: 5%;
 }
 
-.row-container{
-  display:-ms-flexbox;
-  display:flex;
-  -ms-flex-wrap:wrap;
-  flex-wrap:wrap;
-  height: 100%;
-  margin: 5%;
-}
-
-
 #header{
    width: 100%;
    /*Si parametra keisti, jei meniu slepiasi po divais. 
@@ -138,6 +128,10 @@ footer{
   color: white; 
   font-size: 30px; 
   float: right;
+}
+
+.active {
+  background-color: #0099cc;
 }
 
 .header-icon:hover{
@@ -284,12 +278,13 @@ footer{
   padding: 10px;
 }
 
-.category-item > a {
+.category-item > a , .mobile-menu-item > a{
   width: 100%;
   font-size: 17px;
+  text-decoration: none;
 }
 
-.category-item > a:hover{
+.category-item > a:hover , .mobile-menu-item > a:hover{
   color: var(--navigation-color);
 }
 
@@ -298,7 +293,7 @@ footer{
   margin-right: 10px;
 }
 
-.category-item:hover{
+.category-item:hover, .mobile-menu-item:hover{
   background-color: var(--navigation-hover);
   color:white;
 }
@@ -340,7 +335,29 @@ footer{
   border: 2px solid var(--navigation-color);
 }
 
+.top-bar, .middle-bar, .bottom-bar {
+  width: 25px;
+  height: 5px;
+  background-color: white;
+  margin: 5px 0;
+  transition: 0.4s;
+}
 
+.meniu-close .top-bar {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+  transition: transform 0.5s;
+  background-color: #0099cc;
+}
+
+.meniu-close  .middle-bar {opacity: 0;}
+
+.meniu-close  .bottom-bar {
+  -webkit-transform: rotate(45deg) translate(-8px, -5px);
+  transform: rotate(45deg) translate(-8px, -5px);
+  background-color: #0099cc;
+  transition: transform 0.5s;
+}
 
 .action {
   width: 100%;
@@ -384,6 +401,25 @@ footer{
   border-bottom: 1px solid var(--navigation-color);
 }
 
+/* Stilius edit ir delete mygtukams */
+
+#edit_meme_button {
+  color:brown; opacity:0.5;
+}
+
+#edit_meme_button:hover {
+  opacity:1;
+}
+
+#delete_meme_button {
+  color:red; opacity:0.5;
+}
+
+#delete_meme_button:hover {
+  opacity:1;
+}
+
+
 /* Stilius admin prisijungimo langui */
 
 #login-form {
@@ -421,4 +457,219 @@ footer{
   background-color: var(--body-color);
   border-radius: 10px;
   border: 2px solid var(--navigation-color);
+}
+
+#mobile-nav {
+  display: none;
+  z-index: 999;
+}
+
+.row-container{
+  margin-top:70px; 
+}
+
+/*Mobile version*/
+.mobile-menu-background{
+  position:fixed; 
+  left:0; 
+  top:0; 
+  width:100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  display: none;
+}
+
+hr{
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.meniu-close{
+  -webkit-transition: opacity 0.7s;
+  opacity: 1;
+  display: inline;
+}
+
+.mobile-menu-content{
+  width: 30%; 
+  float: right; 
+  z-index: 999; 
+  background: #fff none repeat scroll 0% 0%; 
+  display: inline;
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+  height: 100%;
+  -webkit-transition: opacity 0.7s;
+}
+
+.mobile-menu-content > ul{
+  padding: 0 10px;
+  margin: 0;
+}
+.mobile-menu-item{
+  padding: 10px;
+}
+
+.mobile-menu-item > a {
+  color:black;
+}
+
+.mobile-menu-item.active > a{
+  color: white;
+}
+
+.mobile-menu-item:hover a{
+  color: white;
+}
+
+.mobile-social{
+  width: 35px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.mobile-social > i{
+  color:#0099cc;
+}
+
+
+@media only screen and (max-width:800px){
+  .sidebar-column {
+    display: none;
+  }
+
+  .main-column {
+    height: 100%;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media only screen and (max-width:800px){
+ 
+}
+
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+  .row-container{
+    margin-top:70px;
+  }
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+
+  .row-container{
+    margin-top: 70px;
+  }
+  .nav-bar-item{
+    padding: 10px;
+  }
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+  #header{
+    padding: 0 1.8%;
+  }
+  .row-container{
+    margin: 70px 0 0 0;
+  }
+
+  .sidebar-column, .sidebar-column,.nav-bar-item, .nav-social-icons{
+    display: none;
+  }
+ 
+  #mobile-nav{
+    display: inline;
+    color: white;
+    font-size:22px;
+    cursor: pointer;
+  }
+
+  .main-column{
+      -ms-flex: 0 0 100%;
+      flex: 0 0 100%;
+      max-width: 100%;
+  }
+}
+
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+  
+  #header{
+    padding: 0 2.3%;
+  }
+  .row-container{
+    margin: 70px 0px 0px 0px;
+  }
+
+  #mobile-nav{
+    display: inline;
+    color: white;
+    font-size:22px;
+    cursor: pointer;
+  }
+
+  .nav-bar-item, .nav-social-icons{
+    display: none;
+  }
+}
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 300px) and (max-width: 480px) {
+  
+  #header{
+    padding: 0 4%;
+  }
+
+  .row-container{
+    margin: 70px 0px;
+  }
+
+  #mobile-nav{
+    display: inline;
+    color: white;
+    font-size:22px;
+    cursor: pointer;
+  }
+
+  .navigation-items{
+    display: none;
+  }
+
+  .nav-bar-item, .nav-social-icons{
+    display: none;
+  }  
+  #site-logo{
+    width: 100%;
+  }
 }
