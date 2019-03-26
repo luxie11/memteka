@@ -29,8 +29,10 @@
                             <?php
 								$query = "SELECT * FROM kategorijos";
 								$result = mysqli_query($dbc, $query);
+								$categoriesArray = array();
 								while($row=mysqli_fetch_assoc($result))
-								{						
+								{	
+									array_push($categoriesArray, $row['pavadinimas']); 	
 							?>
 			   
 							<li class="category-item">
@@ -111,4 +113,8 @@
         </main>
     </div>
 </body>
+<script>
+    var categoriesArray = <?php echo json_encode($categoriesArray); ?>
+</script>
+<script src="js/memteka.js"></script>
 </html>
