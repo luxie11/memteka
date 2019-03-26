@@ -5,14 +5,13 @@
     <title>Memteka</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/lt_LT/sdk.js#xfbml=1&version=v3.2&appId=803435083363148&autoLogAppEvents=1"></script>
-
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/lt_LT/sdk.js#xfbml=1&version=v3.2&appId=803435083363148&autoLogAppEvents=1"></script> <!-- REIKIA FB !!!!!!!!!!!!!!!!! -->
+	
 </head>
 <body>
     <div id="wrapper">
        <?php
-			include("includes/header.php");
-			
+			include("includes/header.php");			
 			require('includes/config.php');
 			$dbc=mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 			if(!$dbc){
@@ -29,18 +28,17 @@
                         <ul class="category-list">
                             <?php
 								$query = "SELECT * FROM kategorijos";
-                                $result = mysqli_query($dbc, $query);
-                                $categoriesArray = array();
+								$result = mysqli_query($dbc, $query);
 								while($row=mysqli_fetch_assoc($result))
-								{			
-                                    array_push($categoriesArray, $row['pavadinimas']); 	
+								{						
 							?>
+			   
 							<li class="category-item">
-								<a><?php echo $row['pavadinimas']; ?></a>
+								<a><?php echo htmlentities($row['pavadinimas']); ?></a>
 							</li>
 							<?php
 								} // cia uzdarome category-item while cikla
-                            ?>
+							?>
                         </ul>
                     </aside>
                 </div>
@@ -49,38 +47,41 @@
 						$query = "SELECT * FROM memai";
 						$result = mysqli_query($dbc, $query);
 						while($row=mysqli_fetch_assoc($result))
-						{
-							$id = $row['id']; // iskart prisiskiriame memo ID (reikalinga komentarams)
+						{	
+							$id = htmlentities($row['id']); // iskart prisiskiriame memo ID (reikalinga komentarams)
 					?>
                         <div class="meme-post">
                                 <div class="meme-content">
-					<h3 class="meme-title">
-                                    		<?php
-							echo $row['pavadinimas'];
-						?>
-					</h3>
+									<h3 class="meme-title">
+										<?php
+											echo htmlentities($row['pavadinimas']);
+											if(isset($_SESSION['vartotojo_vardas'])) { // jeigu admin, rodyti edit ir delete mygtukus
+										?>
+											<a href="edit.php?postId=<?php echo $id; ?>" id='edit_meme_button'><i class="fas fa-pen"></i></a>
+											<a href="delete_meme.php?postId=<?php echo $id; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite šalinti memą ir visus jo komentarus? Duomenys bus ištrinti negrįžtamai!')"><i class="fas fa-trash"></i></a>
+											<?php } ?>
+									</h3>
                                 </div>
                                 <div class="meme-image">
-                                    <img src="<?php echo $row['nuoroda'];?>" alt="Smiley face">
+                                    <img src="<?php echo htmlentities($row['nuoroda']);?>" alt="Smiley face">
                                 </div>
                                 <p class="post-meta">
                                     <a class="point badge-evt">
                                         <img src="images/arrows.png" alt="Upvotes" style="width:14px;height:14px;">
                                         <?php
-											echo "${row['tasku_kiekis']} taškų";
+											echo htmlentities($row['tasku_kiekis']), ' taškų';
 										?>
                                     </a>
                                     <a class="comment badge-evt">
                                         <i class="fas fa-comment"></i>
 										<?php
-											echo "${row['komentaru_kiekis']} komentarų";
+											echo htmlentities($row['komentaru_kiekis']), ' komentarų';
 										?>
                                     </a>
                                 </p>
                                 <div class="meme-buttons">
                                     <div class="control-button upvote">
                                         <i class="fas fa-arrow-up"></i>
-										
                                     </div>
                                     <div class="control-button center-button downvote">
                                         <i class="fas fa-arrow-down"></i>
@@ -110,8 +111,4 @@
         </main>
     </div>
 </body>
-<script>
-    var categoriesArray = <?php echo json_encode($categoriesArray); ?>
-</script>
-<script src="js/memteka.js"></script>
 </html>

@@ -23,12 +23,6 @@
                             Kylantys
                         </a>
                     </li>
-					<li class="nav-bar-item">
-                        <a href="upload.php">
-                            <i class="fas fa-plus-square"></i>
-                            Pridėti memą
-                        </a>
-                    </li>
                     <?php
 						session_start();
 						if(isset($_SESSION['vartotojo_vardas'])) {
