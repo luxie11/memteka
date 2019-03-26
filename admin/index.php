@@ -85,8 +85,7 @@
 
 		if (mysqli_num_rows($result) == 1) { // jeigu rado viena eilute, kurios username ir slaptazodis sutampa su ivestais
 			$_SESSION['vartotojo_vardas'] = $vartotojo_vardas;
-			echo $_SESSION['vartotojo_vardas'];
-			//header("Location: ../index.php");
+			header("Location: ../index.php");
 		
 		} else {
 			header("Location: asdads.php");
