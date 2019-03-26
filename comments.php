@@ -64,6 +64,8 @@
                                 <?php
 									echo $row['pavadinimas'];
 								?>
+								<a href="edit.php?memeId=<?php echo $postId; ?>" id='edit_meme_button'><i class="fas fa-pen"></i></a>
+								<a href="delete_meme.php?memeId=<?php echo $postId; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite ðalinti memà ir visus jo komentarus? Duomenys bus iðtrinti negráþtamai!')"><i class="fas fa-trash"></i></a>
 							</h3>
                         </div>
                         <div class="meme-image">
