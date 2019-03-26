@@ -4,12 +4,13 @@
     <meta charset="utf-8" />
     <title>Memteka</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <script async defer src="https://connect.facebook.net/lt_LT/sdk.js#xfbml=1&version=v3.2"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> <!-- REIKIA FB !!!!!!!!!!!!!!!!! -->
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/lt_LT/sdk.js#xfbml=1&version=v3.2&appId=803435083363148&autoLogAppEvents=1"></script> <!-- REIKIA FB !!!!!!!!!!!!!!!!! -->
 </head>
 <body>
     <div id="wrapper">
 		<?php
+			session_start();
 			ob_start();
 			
 			if(!isset($_GET['postId'])) {  // jeigu zmogus ateina i comments.php be GET parametro ?postId=x
@@ -24,7 +25,7 @@
 				die("Negaliu prisijungti prie MySQL:".mysqli_error($dbc));
 			}
 			
-			$postId = htmlentities($_GET['postId']);
+			$postId = $_GET['postId'];
 	    ?>
         <main>
             <div class="row-container">
@@ -42,7 +43,7 @@
 							?>
 			   
 							<li class="category-item">
-								<a><?php echo htmlentities($row['pavadinimas']); ?></a>
+								<a><?php echo $row['pavadinimas']; ?></a>
 							</li>
 							<?php
 								} // cia uzdarome category-item while cikla
@@ -52,37 +53,33 @@
                 </div>
                 <div class="main-column">    
 					<?php
-						$stmt1 = $dbc->prepare("SELECT * FROM memai WHERE id = ?");
-					
-						if($stmt1 && $stmt1 -> bind_param('s', $postId) && $stmt1 -> execute() && $stmt1 -> store_result() && $stmt1 -> bind_result($id, $pavadinimas, $nuoroda, $tasku_kiekis, $komentaru_kiekis, $data, $fk_vartotojo_vardas)) {
-							while ($stmt1 -> fetch()) {
+						$query = "SELECT * FROM memai WHERE id=$postId";
+						$result = mysqli_query($dbc, $query);
+						while($row=mysqli_fetch_assoc($result))
+						{	
 					?>				
                     <div class="meme-post">
                         <div class="meme-content">
 							<h3 class="meme-title">
                                 <?php
-									echo htmlentities($pavadinimas);
-									if(isset($_SESSION['vartotojo_vardas'])) { // jeigu administratorius - rodyti edit ir delete
+									echo $row['pavadinimas'];
 								?>
-									<a href="edit.php?postId=<?php echo $postId; ?>" id='edit_meme_button'><i class="fas fa-pen"></i></a>
-									<a href="delete_meme.php?postId=<?php echo $postId; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite ðalinti memà ir visus jo komentarus? Duomenys bus iðtrinti negráþtamai!')"><i class="fas fa-trash"></i></a>
-								<?php } ?>
 							</h3>
                         </div>
                         <div class="meme-image">
-                            <img src="<?php echo htmlentities($nuoroda);?>">
+                            <img src="<?php echo $row['nuoroda'];?>" alt="Smiley face">
                         </div>
                         <p class="post-meta">
                             <a class="point badge-evt">
                                 <img src="images/arrows.png" alt="Upvotes" style="width:14px;height:14px;">
                                     <?php
-										echo htmlentities($tasku_kiekis), ' ta&#353k&#371';
+										echo "${row['tasku_kiekis']} ta&#353k&#371";
 									?>
                             </a>
                             <a class="comment badge-evt">
                                 <i class="fas fa-comment"></i>
 									<?php
-										echo htmlentities($komentaru_kiekis), ' komentar&#371';
+										echo "${row['komentaru_kiekis']} komentar&#371";
 									?>
                             </a>
                         </p>
@@ -111,48 +108,39 @@
 								</div>
 							</div>
 							<?php
-								$stmt2 = $dbc->prepare("SELECT id AS komentaro_id, vardas, komentaras, ip, data AS komentaro_data, fk_memo_id FROM komentarai WHERE fk_memo_id = ? ORDER BY komentaro_data DESC");
-								if($stmt2 && $stmt2 -> bind_param('s', $postId) && $stmt2 -> execute() && $stmt2 -> store_result() && $stmt2 -> bind_result($komentaro_id, $vardas, $komentaras, $ip, $komentaro_data, $fk_memo_id)) {
-									while ($stmt2 -> fetch()) {
-										date_default_timezone_set('Europe/Vilnius');
-										$komentaro_data_format = date('Y-m-d H:i', strtotime($komentaro_data));// pakeiciam datos formata, kad nerodytu sekundziu
+								$query = "SELECT * FROM komentarai WHERE fk_memo_id=$postId ORDER BY data DESC";
+								$result = mysqli_query($dbc, $query);
+								while($row=mysqli_fetch_assoc($result))
+								{
+									date_default_timezone_set('Europe/Vilnius');
+									$data = date('Y-m-d H:i', strtotime($row['data']));// pakeiciam datos formata, kad nerodytu sekundziu
 							?>
 							
 							<div class="comment-entry">
 								<div class="payload">
 									<p class="username-date">
-										<span class="username"><?php echo htmlentities($vardas); ?></span>
-										<?php if(isset($_SESSION['vartotojo_vardas'])){ // jeigu admin - leisti trinti komentarus ir rodyti IP ?>
-												<label style='color:grey'><?php echo 'IP: ', htmlentities($ip); ?></label>
-										<a href="delete_comment.php?commentId=<?php echo $komentaro_id; ?>&&postId=<?php echo $postId; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite &#353alinti &#353&#303 komentar&#261;?')"><i class="fas fa-trash"></i></a>
-										<?php } ?>
-										<span class="date"><?php echo htmlentities($komentaro_data_format); ?></span>
+										<span class="username"><?php echo $row['vardas']; ?></span>
+										
+										<span class="date"><?php echo $data; ?></span>
 									</p>
 									<div class="comment-content">
-										<?php echo htmlentities($komentaras); ?>
+										<?php echo $row['komentaras']; ?>
 									</div>
 								</div>
 							</div>
 							
 							<?php
-								}	// uzdarome komentaru while cikla
-								$stmt2->close();
-							} else {
-								echo "Paruostos uzklausos klaida";
-							}
+								} // cia uzdarome category-item while cikla
 							?>
+							
 						</div>
                     </div>
 					<?php
-							}	// uzdarome memu while cikla
-							$stmt1->close();
-						} else {
-							echo "Paruostos uzklausos klaida";
-						}
+						} // cia uzdarome meme_post while cikla
 					?>
                 </div>
                 <div class="sidebar-column">
-                    <div style="height: 200px; background: white;"></div>
+					<div class="fb-group" data-href="https://www.facebook.com/groups/ayearofrunning/" data-width="280" data-show-social-context="false" data-show-metadata="false"></div>     <!-- REIKIA FB !!!!!!!!!!!!!!!!! -->
                 </div>
             </div>
 			<?php
@@ -186,19 +174,27 @@
 			$data = date('Y-m-d H:i', time());
 			$ip = $_SERVER['REMOTE_ADDR'];
 			
-			// iterpia komentara
-			$stmt3 = $dbc->prepare("INSERT INTO komentarai (vardas, komentaras, ip, data, fk_memo_id) VALUES (?, ?, '$ip', '$data', '$postId')");
-			$stmt3->bind_param("ss", $vardas, $komentaras);
-			$stmt3->execute();
-			$stmt3->close();
-			// padidina komentaru kieki vienetu
-			$stmt4 = $dbc->prepare("UPDATE memai SET komentaru_kiekis=komentaru_kiekis+1 WHERE id='$postId';");
-			$stmt4->execute();
-			$stmt4->close();
-
-			header("Location: comments.php?postId=$postId");
-		} else {
+			$query = "INSERT INTO komentarai (vardas, komentaras, ip, data, fk_memo_id)
+					  VALUES ('$vardas', '$komentaras', '$ip', '$data', '$postId')";
+					  
+			if(mysqli_query($dbc, $query))
+			{
+			//	unset($_SESSION['create_course_pavadinimas']);	// isvalome is sesijos
+			//	unset($_SESSION['create_course_aprasymas']);
+			//	unset($_SESSION['create_course_date']);
+			//	unset($_SESSION['create_course_time']);
+			//	unset($_SESSION['create_course_kaina']);
+			//	unset($_SESSION['create_course_vietu_skaicius']);
+				
+			//	$message = "Kursas sukurtas sëkmingai!";
+			//	echo "<script type='text/javascript'>alert('$message');location='index.php';</script>"; // issoka alert, po to nukreipia atgal i index.php
+				header("Location: comments.php?postId=$postId");
+			} else {
 				header("Location: index.php");
+			}
+		} else {
+				//$_SESSION['error_create_course_vietu_skaicius'] = "Sukurti kurso nepavyko. Bandykite dar kartà";
+				//header("Location: index.php");
 		}
 	}
 ?>

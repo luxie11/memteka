@@ -14,7 +14,13 @@
 </head>
 <body>
     <div id="wrapper">
-        <?php include("includes/header.php"); ?>
+        <?php
+			include("includes/header.php");
+			if(!isset($_SESSION['vartotojo_vardas'])) 	// jei jungiasi ne administratorius, grazina i index.php
+			{
+				header("Location: index.php");
+			}
+		?>
         <main>
             <div class="row-container">
                 <div class="sidebar-column">
@@ -29,13 +35,10 @@
                             if(!$dbc){
                                 die('Klaida! Negalima prisijungti prie duomenų bazės:' . mysqli_error($dbc));
                             }
-                            $query = 'SELECT * 
-                                      FROM kategorijos';
+                            $query = 'SELECT * FROM kategorijos';
                             $result = mysqli_query($dbc, $query);
                             while($row=mysqli_fetch_assoc($result)){
-                                echo "<li class=\"category-item\">
-								        <a>" .$row['pavadinimas']. "</a>
-							          </li>";			
+                                echo "<li class=\"category-item\"><a>" .$row['pavadinimas']. "</a></li>";			
                              } 
                         ?>
                         </ul>
