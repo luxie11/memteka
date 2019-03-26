@@ -111,4 +111,8 @@
         </main>
     </div>
 </body>
+	<script>
+    var categoriesArray = <?php echo json_encode($categoriesArray); ?>
+</script>
+<script src="js/memteka.js"></script>
 </html>
