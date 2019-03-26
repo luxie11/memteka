@@ -35,7 +35,7 @@
 							?>
 			   
 							<li class="category-item">
-								<a><?php echo $row['pavadinimas']; ?></a>
+								<a><?php echo htmlentities($row['pavadinimas']); ?></a>
 							</li>
 							<?php
 								} // cia uzdarome category-item while cikla
@@ -49,32 +49,32 @@
 						$result = mysqli_query($dbc, $query);
 						while($row=mysqli_fetch_assoc($result))
 						{	
-							$id = $row['id']; // iskart prisiskiriame memo ID (reikalinga komentarams)
+							$id = htmlentities($row['id']); // iskart prisiskiriame memo ID (reikalinga komentarams)
 					?>
                         <div class="meme-post">
                                 <div class="meme-content">
 									<h3 class="meme-title">
 										<?php
-											echo $row['pavadinimas'];
+											echo htmlentities($row['pavadinimas']);
 										?>
 										<a href="edit.php?memeId=<?php echo $id; ?>" id='edit_meme_button'><i class="fas fa-pen"></i></a>
 										<a href="delete_meme.php?memeId=<?php echo $id; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite šalinti memą ir visus jo komentarus? Duomenys bus ištrinti negrįžtamai!')"><i class="fas fa-trash"></i></a>
 									</h3>
                                 </div>
                                 <div class="meme-image">
-                                    <img src="<?php echo $row['nuoroda'];?>" alt="Smiley face">
+                                    <img src="<?php echo htmlentities($row['nuoroda']);?>" alt="Smiley face">
                                 </div>
                                 <p class="post-meta">
                                     <a class="point badge-evt">
                                         <img src="images/arrows.png" alt="Upvotes" style="width:14px;height:14px;">
                                         <?php
-											echo "${row['tasku_kiekis']} taškų";
+											echo htmlentities($row['tasku_kiekis']), ' taškų';
 										?>
                                     </a>
                                     <a class="comment badge-evt">
                                         <i class="fas fa-comment"></i>
 										<?php
-											echo "${row['komentaru_kiekis']} komentarų";
+											echo htmlentities($row['komentaru_kiekis']), ' komentarų';
 										?>
                                     </a>
                                 </p>

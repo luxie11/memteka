@@ -26,7 +26,7 @@
                         <?php
 							session_start();
 							ob_start();
-							$memeId = $_GET['memeId']; // paimame memeId
+							$memeId = htmlentities($_GET['memeId']); // paimame memeId
 							
                             include('includes/config.php');
                             $dbc = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
@@ -53,7 +53,7 @@
                         <div class="meme-content">
 							<h3 class="meme-title">
 								<form method="post" enctype="multipart/form-data">
-									<input type="text" name="edit_meme-title" id="edit_meme-title" maxlength="255" value="<?php echo $row['pavadinimas'];?>" style="width:90%" required />
+									<input type="text" name="edit_meme-title" id="edit_meme-title" maxlength="255" value="<?php echo htmlentities($row['pavadinimas']);?>" style="width:90%" required />
 									<button type="submit" name="submit" style="border:none; background:none; width:auto; padding:0;">
 										<i class="fas fa-check" style="color:green; cursor:pointer; font-size:20px"></i>
 									</button>
@@ -61,19 +61,19 @@
 							</h3>
                         </div>
                         <div class="meme-image">
-                            <img src="<?php echo $row['nuoroda'];?>" alt="Smiley face">
+                            <img src="<?php echo htmlentities($row['nuoroda']);?>" alt="Smiley face">
                         </div>
                         <p class="post-meta">
                             <a class="point badge-evt">
                                 <img src="images/arrows.png" alt="Upvotes" style="width:14px;height:14px;">
                                     <?php
-										echo "${row['tasku_kiekis']} ta&#353k&#371";
+										echo htmlentities($row['tasku_kiekis']), ' ta&#353k&#371';
 									?>
                             </a>
                             <a class="comment badge-evt">
                                 <i class="fas fa-comment"></i>
 									<?php
-										echo "${row['komentaru_kiekis']} komentar&#371";
+										echo htmlentities($row['komentaru_kiekis']), " komentar&#371";
 									?>
                             </a>
                         </p>
