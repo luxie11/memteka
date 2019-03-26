@@ -16,6 +16,7 @@
     <div id="wrapper">
         <?php
 		include("includes/header.php");
+		ob_start();
 			if(!isset($_SESSION['vartotojo_vardas'])) 	// jei jungiasi ne administratorius, grazina i index.php
 			{
 				header("Location: index.php");
@@ -111,5 +112,7 @@
 			$sql->execute();
 			$sql->close();
 		}
+		$message = "Pavadinimas sėkmingai pakeistas!";
+		echo "<script type='text/javascript'>alert('$message');location='edit.php?postId=$postId';</script>";
 	}
 ?>
