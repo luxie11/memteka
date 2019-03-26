@@ -122,6 +122,7 @@
 										<span class="username"><?php echo $row['vardas']; ?></span>
 										
 										<span class="date"><?php echo $data; ?></span>
+										<a href="delete_comment.php?commentId=<?php echo $row['id']; ?>&&postId=<?php echo $postId; ?>" style="color:red;" onclick="return confirm('Ar tikrai norite &#353alinti &#353&#303 komentar&#261;?')"><i class="fas fa-trash"></i></a>
 									</p>
 									<div class="comment-content">
 										<?php echo $row['komentaras']; ?>
@@ -175,9 +176,9 @@
 			$ip = $_SERVER['REMOTE_ADDR'];
 			
 			$query = "INSERT INTO komentarai (vardas, komentaras, ip, data, fk_memo_id)
-					  VALUES ('$vardas', '$komentaras', '$ip', '$data', '$postId')";
+					  VALUES ('$vardas', '$komentaras', '$ip', '$data', '$postId'); UPDATE memai SET komentaru_kiekis=komentaru_kiekis+1 WHERE id='$postId';";
 					  
-			if(mysqli_query($dbc, $query))
+			if(mysqli_multi_query($dbc, $query))
 			{
 			//	unset($_SESSION['create_course_pavadinimas']);	// isvalome is sesijos
 			//	unset($_SESSION['create_course_aprasymas']);
