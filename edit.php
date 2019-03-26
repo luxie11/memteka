@@ -49,16 +49,16 @@
                 </div>
                 <div class="main-column">
                     <?php
-						$query = "SELECT * FROM memai WHERE id=$postId";
-						$result = mysqli_query($dbc, $query);
-						while($row=mysqli_fetch_assoc($result))
-						{	
+						$stmt1 = $dbc->prepare("SELECT * FROM memai WHERE id = ?");
+					
+						if($stmt1 && $stmt1 -> bind_param('s', $postId) && $stmt1 -> execute() && $stmt1 -> store_result() && $stmt1 -> bind_result($id, $pavadinimas, $nuoroda, $tasku_kiekis, $komentaru_kiekis, $data, $fk_vartotojo_vardas)) {
+							while ($stmt1 -> fetch()) {
 					?>				
                     <div class="meme-post">
                         <div class="meme-content">
 							<h3 class="meme-title">
 								<form method="post" enctype="multipart/form-data">
-									<input type="text" name="edit_meme-title" id="edit_meme-title" maxlength="255" value="<?php echo htmlentities($row['pavadinimas']);?>" style="width:90%" required />
+									<input type="text" name="edit_meme-title" id="edit_meme-title" maxlength="255" value="<?php echo htmlentities($pavadinimas);?>" style="width:90%" required />
 									<button type="submit" name="submit" style="border:none; background:none; width:auto; padding:0;">
 										<i class="fas fa-check" style="color:green; cursor:pointer; font-size:20px"></i>
 									</button>
@@ -66,25 +66,29 @@
 							</h3>
                         </div>
                         <div class="meme-image">
-                            <img src="<?php echo htmlentities($row['nuoroda']);?>" alt="Smiley face">
+                            <img src="<?php echo htmlentities($nuoroda);?>" alt="Smiley face">
                         </div>
                         <p class="post-meta">
                             <a class="point badge-evt">
                                 <img src="images/arrows.png" alt="Upvotes" style="width:14px;height:14px;">
                                     <?php
-										echo htmlentities($row['tasku_kiekis']), ' ta&#353k&#371';
+										echo htmlentities($tasku_kiekis), ' ta&#353k&#371';
 									?>
                             </a>
                             <a class="comment badge-evt">
                                 <i class="fas fa-comment"></i>
 									<?php
-										echo htmlentities($row['komentaru_kiekis']), " komentar&#371";
+										echo htmlentities($komentaru_kiekis), ' komentar&#371';
 									?>
                             </a>
                         </p>
                     </div>
 					<?php
-						} // cia uzdarome meme_post while cikla
+						}	// uzdarome meme-post while cikla
+						$stmt1->close();
+					} else {
+						echo "Paruostos uzklausos klaida";
+					}
 					?>
                 </div>
                 <div class="sidebar-column">
@@ -99,33 +103,13 @@
 </html>
 
 <?php
-	if(isset($_POST["submit"])) {
+	if(isset($_POST["submit"])) {		
 		$naujas_pavadinimas=$_POST['edit_meme-title'];
-		
+
 		if ($sql = $dbc->prepare("UPDATE memai SET pavadinimas = ? WHERE id = ?")) {
-			// Bind the variables to the parameter as strings. 
 			$sql->bind_param("ss", $naujas_pavadinimas, $postId);
-		 
-			// Execute the statement.
 			$sql->execute();
-		 
-			// Close the prepared statement.
 			$sql->close();
 		}
-		
-		echo $sql;
-		
-		//$sql = "UPDATE memai SET pavadinimas='$naujas_pavadinimas' WHERE id='$postId'";
-
-		//if (mysqli_multi_query($dbc, $sql)) {
-		//	mysqli_close($dbc);
-		//	$message="Pavadinimas sėkmingai atnaujintas!";
-		//	echo "<script type='text/javascript'>alert('$message');location='edit.php?postId=$postId';</script>"; // issoka alert, po to refreshina
-			
-			//header("Location: edit.php?postId=$postId"); //Jei viskas gerai, grazina atgal
-		//	exit;
-		//} else {
-		//	echo "Klaida redaguojant įrašą";
-		//}
 	}
 ?>

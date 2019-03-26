@@ -303,7 +303,7 @@ footer{
   color:white;
 }
 
-/* Stilius komentar√∏ puslapiui */
+/* Stilius komentar∏ puslapiui */
 
 .meme-comments{
   min-height: 360px;
@@ -434,11 +434,9 @@ footer{
 }
 
 #delete_meme_button {
-  color:red;
-  opacity:0.5;
+  color:red; opacity:0.5;
 }
 
 #delete_meme_button:hover {
   opacity:1;
 }
-
