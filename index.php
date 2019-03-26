@@ -57,8 +57,8 @@
 										<?php
 											echo $row['pavadinimas'];
 										?>
-										<a href="edit.php?memeId=<?php echo $id; ?>" style="color:brown;"><i class="fas fa-pen"></i></a>
-										<a href="delete_meme.php?memeId=<?php echo $id; ?>" style="color:red;" onclick="return confirm('Ar tikrai norite šalinti memą ir visus jo komentarus? Duomenys bus ištrinti negrįžtamai!')"><i class="fas fa-trash"></i></a>
+										<a href="edit.php?memeId=<?php echo $id; ?>" id='edit_meme_button'><i class="fas fa-pen"></i></a>
+										<a href="delete_meme.php?memeId=<?php echo $id; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite šalinti memą ir visus jo komentarus? Duomenys bus ištrinti negrįžtamai!')"><i class="fas fa-trash"></i></a>
 									</h3>
                                 </div>
                                 <div class="meme-image">

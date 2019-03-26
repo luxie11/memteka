@@ -122,7 +122,7 @@
 										<span class="username"><?php echo $row['vardas']; ?></span>
 										
 										<span class="date"><?php echo $data; ?></span>
-										<a href="delete_comment.php?commentId=<?php echo $row['id']; ?>&&postId=<?php echo $postId; ?>" style="color:red;" onclick="return confirm('Ar tikrai norite &#353alinti &#353&#303 komentar&#261;?')"><i class="fas fa-trash"></i></a>
+										<a href="delete_comment.php?commentId=<?php echo $row['id']; ?>&&postId=<?php echo $postId; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite &#353alinti &#353&#303 komentar&#261;?')"><i class="fas fa-trash"></i></a>
 									</p>
 									<div class="comment-content">
 										<?php echo $row['komentaras']; ?>
