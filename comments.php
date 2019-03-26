@@ -25,7 +25,7 @@
 				die("Negaliu prisijungti prie MySQL:".mysqli_error($dbc));
 			}
 			
-			$postId = $_GET['postId'];
+			$postId = htmlentities($_GET['postId']);
 	    ?>
         <main>
             <div class="row-container">
@@ -43,7 +43,7 @@
 							?>
 			   
 							<li class="category-item">
-								<a><?php echo $row['pavadinimas']; ?></a>
+								<a><?php echo htmlentities($row['pavadinimas']); ?></a>
 							</li>
 							<?php
 								} // cia uzdarome category-item while cikla
@@ -62,26 +62,26 @@
                         <div class="meme-content">
 							<h3 class="meme-title">
                                 <?php
-									echo $row['pavadinimas'];
+									echo htmlentities($row['pavadinimas']);
 								?>
 								<a href="edit.php?memeId=<?php echo $postId; ?>" id='edit_meme_button'><i class="fas fa-pen"></i></a>
 								<a href="delete_meme.php?memeId=<?php echo $postId; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite ðalinti memà ir visus jo komentarus? Duomenys bus iðtrinti negráþtamai!')"><i class="fas fa-trash"></i></a>
 							</h3>
                         </div>
                         <div class="meme-image">
-                            <img src="<?php echo $row['nuoroda'];?>" alt="Smiley face">
+                            <img src="<?php echo htmlentities($row['nuoroda']);?>" alt="Smiley face">
                         </div>
                         <p class="post-meta">
                             <a class="point badge-evt">
                                 <img src="images/arrows.png" alt="Upvotes" style="width:14px;height:14px;">
                                     <?php
-										echo "${row['tasku_kiekis']} ta&#353k&#371";
+										echo htmlentities($row['tasku_kiekis']), ' ta&#353k&#371';
 									?>
                             </a>
                             <a class="comment badge-evt">
                                 <i class="fas fa-comment"></i>
 									<?php
-										echo "${row['komentaru_kiekis']} komentar&#371";
+										echo htmlentities($row['komentaru_kiekis']), " komentar&#371";
 									?>
                             </a>
                         </p>
@@ -121,13 +121,13 @@
 							<div class="comment-entry">
 								<div class="payload">
 									<p class="username-date">
-										<span class="username"><?php echo $row['vardas']; ?></span>
+										<span class="username"><?php echo htmlentities($row['vardas']); ?></span>
 										
-										<span class="date"><?php echo $data; ?></span>
+										<span class="date"><?php echo htmlentities($data); ?></span>
 										<a href="delete_comment.php?commentId=<?php echo $row['id']; ?>&&postId=<?php echo $postId; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite &#353alinti &#353&#303 komentar&#261;?')"><i class="fas fa-trash"></i></a>
 									</p>
 									<div class="comment-content">
-										<?php echo $row['komentaras']; ?>
+										<?php echo htmlentities($row['komentaras']); ?>
 									</div>
 								</div>
 							</div>
