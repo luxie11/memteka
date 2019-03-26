@@ -80,10 +80,10 @@
                                     </a>
                                 </p>
                                 <div class="meme-buttons">
-                                    <div class="control-button">
+                                    <div class="control-button upvote">
                                         <i class="fas fa-arrow-up"></i>
                                     </div>
-                                    <div class="control-button center-button">
+                                    <div class="control-button center-button downvote">
                                         <i class="fas fa-arrow-down"></i>
                                     </div>
                                     <div class="control-button right-button" id="komentarai-<?php echo $id; ?>">
