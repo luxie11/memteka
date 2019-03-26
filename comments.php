@@ -10,7 +10,6 @@
 <body>
     <div id="wrapper">
 		<?php
-			session_start();
 			ob_start();
 			
 			if(!isset($_GET['postId'])) {  // jeigu zmogus ateina i comments.php be GET parametro ?postId=x
@@ -63,9 +62,11 @@
 							<h3 class="meme-title">
                                 <?php
 									echo htmlentities($row['pavadinimas']);
+									if(isset($_SESSION['vartotojo_vardas'])) { // jeigu administratorius - rodyti edit ir delete
 								?>
-								<a href="edit.php?memeId=<?php echo $postId; ?>" id='edit_meme_button'><i class="fas fa-pen"></i></a>
-								<a href="delete_meme.php?memeId=<?php echo $postId; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite ðalinti memà ir visus jo komentarus? Duomenys bus iðtrinti negráþtamai!')"><i class="fas fa-trash"></i></a>
+									<a href="edit.php?postId=<?php echo $postId; ?>" id='edit_meme_button'><i class="fas fa-pen"></i></a>
+									<a href="delete_meme.php?postId=<?php echo $postId; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite ðalinti memà ir visus jo komentarus? Duomenys bus iðtrinti negráþtamai!')"><i class="fas fa-trash"></i></a>
+								<?php } ?>
 							</h3>
                         </div>
                         <div class="meme-image">
@@ -124,7 +125,9 @@
 										<span class="username"><?php echo htmlentities($row['vardas']); ?></span>
 										
 										<span class="date"><?php echo htmlentities($data); ?></span>
-										<a href="delete_comment.php?commentId=<?php echo $row['id']; ?>&&postId=<?php echo $postId; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite &#353alinti &#353&#303 komentar&#261;?')"><i class="fas fa-trash"></i></a>
+										<?php if(isset($_SESSION['vartotojo_vardas'])){ // jeigu admin - leisti trinti komentarus ?>
+												<a href="delete_comment.php?commentId=<?php echo $row['id']; ?>&&postId=<?php echo $postId; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite &#353alinti &#353&#303 komentar&#261;?')"><i class="fas fa-trash"></i></a>
+										<?php } ?>
 									</p>
 									<div class="comment-content">
 										<?php echo htmlentities($row['komentaras']); ?>
@@ -133,7 +136,7 @@
 							</div>
 							
 							<?php
-								} // cia uzdarome category-item while cikla
+								} // cia uzdarome komentaru while cikla
 							?>
 							
 						</div>

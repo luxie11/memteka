@@ -14,7 +14,13 @@
 </head>
 <body>
     <div id="wrapper">
-        <?php include("includes/header.php"); ?>
+        <?php
+		include("includes/header.php");
+			if(!isset($_SESSION['vartotojo_vardas'])) 	// jei jungiasi ne administratorius, grazina i index.php
+			{
+				header("Location: index.php");
+			}
+		?>
         <main>
             <div class="row-container">
                 <div class="sidebar-column">
@@ -24,9 +30,8 @@
                         </div>
                         <ul class="category-list">
                         <?php
-							session_start();
 							ob_start();
-							$memeId = htmlentities($_GET['memeId']); // paimame memeId
+							$postId = htmlentities($_GET['postId']); // paimame postId
 							
                             include('includes/config.php');
                             $dbc = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
@@ -44,7 +49,7 @@
                 </div>
                 <div class="main-column">
                     <?php
-						$query = "SELECT * FROM memai WHERE id=$memeId";
+						$query = "SELECT * FROM memai WHERE id=$postId";
 						$result = mysqli_query($dbc, $query);
 						while($row=mysqli_fetch_assoc($result))
 						{	
@@ -96,17 +101,31 @@
 <?php
 	if(isset($_POST["submit"])) {
 		$naujas_pavadinimas=$_POST['edit_meme-title'];
-		$sql = "UPDATE memai SET pavadinimas='$naujas_pavadinimas' WHERE id='$memeId'";
-
-		if (mysqli_multi_query($dbc, $sql)) {
-			mysqli_close($dbc);
-			$message="Pavadinimas sėkmingai atnaujintas!";
-			echo "<script type='text/javascript'>alert('$message');location='edit.php?memeId=$memeId';</script>"; // issoka alert, po to refreshina
-			
-			//header("Location: edit.php?memeId=$memeId"); //Jei viskas gerai, grazina atgal
-			exit;
-		} else {
-			echo "Klaida redaguojant įrašą";
+		
+		if ($sql = $dbc->prepare("UPDATE memai SET pavadinimas = ? WHERE id = ?")) {
+			// Bind the variables to the parameter as strings. 
+			$sql->bind_param("ss", $naujas_pavadinimas, $postId);
+		 
+			// Execute the statement.
+			$sql->execute();
+		 
+			// Close the prepared statement.
+			$sql->close();
 		}
+		
+		echo $sql;
+		
+		//$sql = "UPDATE memai SET pavadinimas='$naujas_pavadinimas' WHERE id='$postId'";
+
+		//if (mysqli_multi_query($dbc, $sql)) {
+		//	mysqli_close($dbc);
+		//	$message="Pavadinimas sėkmingai atnaujintas!";
+		//	echo "<script type='text/javascript'>alert('$message');location='edit.php?postId=$postId';</script>"; // issoka alert, po to refreshina
+			
+			//header("Location: edit.php?postId=$postId"); //Jei viskas gerai, grazina atgal
+		//	exit;
+		//} else {
+		//	echo "Klaida redaguojant įrašą";
+		//}
 	}
 ?>

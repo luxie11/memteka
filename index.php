@@ -11,8 +11,7 @@
 <body>
     <div id="wrapper">
        <?php
-			include("includes/header.php");
-			
+			include("includes/header.php");			
 			require('includes/config.php');
 			$dbc=mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 			if(!$dbc){
@@ -56,9 +55,11 @@
 									<h3 class="meme-title">
 										<?php
 											echo htmlentities($row['pavadinimas']);
+											if(isset($_SESSION['vartotojo_vardas'])) { // jeigu admin, rodyti edit ir delete mygtukus
 										?>
-										<a href="edit.php?memeId=<?php echo $id; ?>" id='edit_meme_button'><i class="fas fa-pen"></i></a>
-										<a href="delete_meme.php?memeId=<?php echo $id; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite šalinti memą ir visus jo komentarus? Duomenys bus ištrinti negrįžtamai!')"><i class="fas fa-trash"></i></a>
+											<a href="edit.php?postId=<?php echo $id; ?>" id='edit_meme_button'><i class="fas fa-pen"></i></a>
+											<a href="delete_meme.php?postId=<?php echo $id; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite šalinti memą ir visus jo komentarus? Duomenys bus ištrinti negrįžtamai!')"><i class="fas fa-trash"></i></a>
+											<?php } ?>
 									</h3>
                                 </div>
                                 <div class="meme-image">
