@@ -88,7 +88,7 @@
 			header("Location: ../index.php");
 		
 		} else {
-			header("Location: asdads.php");
+			header("Location: index.php");
 		}
 }
 ?>
