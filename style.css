@@ -422,3 +422,23 @@ footer{
   border-radius: 10px;
   border: 2px solid var(--navigation-color);
 }
+
+/* Stilius edit ir delete mygtukams */
+
+#edit_meme_button {
+  color:brown; opacity:0.5;
+}
+
+#edit_meme_button:hover {
+  opacity:1;
+}
+
+#delete_meme_button {
+  color:red;
+  opacity:0.5;
+}
+
+#delete_meme_button:hover {
+  opacity:1;
+}
+
