@@ -1,7 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['vartotojo_vardas'])) 	// jei jungiasi ne administratorius, grazina i index.php
-{
+if(!isset($_SESSION['vartotojo_vardas'])) { 	// jei jungiasi ne administratorius, grazina i index.php
 	header("Location: index.php");
 } else {
 	$postId = $_GET['postId']; // memo id
@@ -12,15 +11,26 @@ if(!isset($_SESSION['vartotojo_vardas'])) 	// jei jungiasi ne administratorius, 
 		die("Negaliu prisijungti prie MySQL:".mysqli_error($dbc));
 	}
 
-	$sql = "DELETE FROM komentarai WHERE fk_memo_id = '$postId'; DELETE FROM memai WHERE id = '$postId'";
-
-	if (mysqli_multi_query($dbc, $sql)) {
-		mysqli_close($dbc);
-		header('Location: index.php'); //Jei viskas gerai, grazina atgal
-		exit;
-	} else {
-		echo "Klaida trinant įrašą";
+	// istrinti su memu susijusias kategorijas
+	if($sql = $dbc->prepare("DELETE FROM memai_kategorijos WHERE fk_memo_id = ?")) {
+		$sql->bind_param("i", $postId);
+		$sql->execute();
+		$sql->close();
 	}
-}
+	// istrinti su memu susijusius komentarus
+	if($sql = $dbc->prepare("DELETE FROM komentarai WHERE fk_memo_id = ?")) {
+		$sql->bind_param("i", $postId);
+		$sql->execute();
+		$sql->close();
+	}
+	// istrinti mema
+	if($sql = $dbc->prepare("DELETE FROM memai WHERE id = ?")) {
+		$sql->bind_param("i", $postId);
+		$sql->execute();
+		$sql->close();
+	}
 
+	header('Location: index.php'); //Jei viskas gerai, grazina atgal
+	exit;
+}
 ?>

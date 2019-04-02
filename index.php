@@ -117,4 +117,8 @@
     var categoriesArray = <?php echo json_encode($categoriesArray); ?>
 </script>
 <script src="js/memteka.js"></script>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 94ec213756ccf72351560f9f83c05d641f27cc20
