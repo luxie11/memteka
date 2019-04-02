@@ -63,7 +63,7 @@
 									</h3>
                                 </div>
                                 <div class="meme-image">
-                                    <img src="<?php echo htmlentities($row['nuoroda']);?>" alt="Smiley face">
+                                    <img src="<?php echo htmlentities($row['nuoroda']);?>" alt="<?php echo htmlentities($row['pavadinimas']);?>">
                                 </div>
                                 <p class="post-meta">
                                     <a class="point badge-evt">
