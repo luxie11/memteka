@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/lt_LT/sdk.js#xfbml=1&version=v3.2&appId=803435083363148&autoLogAppEvents=1"></script> <!-- REIKIA FB !!!!!!!!!!!!!!!!! -->
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
     <div id="wrapper">
@@ -28,9 +28,11 @@
                         <ul class="category-list">
                             <?php
 								$query = "SELECT * FROM kategorijos";
-								$result = mysqli_query($dbc, $query);
+                                $result = mysqli_query($dbc, $query);
+                                $categoriesArray = array();
 								while($row=mysqli_fetch_assoc($result))
-								{						
+								{			
+                                    array_push($categoriesArray, $row['pavadinimas']); 				
 							?>
 			   
 							<li class="category-item">
@@ -63,7 +65,7 @@
 									</h3>
                                 </div>
                                 <div class="meme-image">
-                                    <img src="<?php echo htmlentities($row['nuoroda']);?>" alt="Smiley face">
+                                    <img src="<?php echo htmlentities($row['nuoroda']);?>" alt="<?php echo htmlentities($row['pavadinimas']);?>">
                                 </div>
                                 <p class="post-meta">
                                     <a class="point badge-evt">
@@ -80,10 +82,10 @@
                                     </a>
                                 </p>
                                 <div class="meme-buttons">
-                                    <div class="control-button upvote">
+                                    <div class="control-button upvote" data-upvote-id=<?php echo $id; ?>>
                                         <i class="fas fa-arrow-up"></i>
                                     </div>
-                                    <div class="control-button center-button downvote">
+                                    <div class="control-button center-button downvote" data-downvote-id=<?php echo $id; ?>>
                                         <i class="fas fa-arrow-down"></i>
                                     </div>
                                     <div class="control-button right-button" id="komentarai-<?php echo $id; ?>">
@@ -111,4 +113,8 @@
         </main>
     </div>
 </body>
+<script>
+    var categoriesArray = <?php echo json_encode($categoriesArray); ?>
+</script>
+<script src="js/memteka.js"></script>
 </html>
