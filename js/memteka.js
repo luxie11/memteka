@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //Mygtuku masyvas - upvote,downvote,komentarai
 //IFFE - ar butina?
 (function(){
@@ -132,8 +131,6 @@ if(getCookie()){
 })();
 
 
-=======
->>>>>>> 94ec213756ccf72351560f9f83c05d641f27cc20
 var navMenu = document.querySelector('.mobile-menu-background');
 
 function windowOnClick(event) {
