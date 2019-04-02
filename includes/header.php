@@ -34,6 +34,12 @@
 							</a>
 						</li>
 						<li class="nav-bar-item">
+							<a href="add_category.php">
+								<i class="fas fa-plus-square"></i>
+								Pridėti kategoriją
+							</a>
+						</li>
+						<li class="nav-bar-item">
 							<a href="logout.php">
 								<i class="fas fa-key"></i>
 								Atsijungti
