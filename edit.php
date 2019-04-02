@@ -6,11 +6,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <script async defer src="https://connect.facebook.net/lt_LT/sdk.js#xfbml=1&version=v3.2"></script>
-    <style>
-        footer{
-            position:absolute;
-        }
-    </style>
 </head>
 <body>
     <div id="wrapper">
@@ -43,7 +38,7 @@
                             $result = mysqli_query($dbc, $query);
                             while($row=mysqli_fetch_assoc($result)){
                                 echo "<li class=\"category-item\"><a>" .$row['pavadinimas']. "</a></li>";			
-                             } 
+                            } 
                         ?>
                         </ul>
                     </aside>
@@ -62,12 +57,34 @@
 									<input type="text" name="edit_meme-title" id="edit_meme-title" maxlength="255" value="<?php echo htmlentities($pavadinimas);?>" style="width:90%" required />
 									<button type="submit" name="submit" style="border:none; background:none; width:auto; padding:0;">
 										<i class="fas fa-check" style="color:green; cursor:pointer; font-size:20px"></i>
-									</button>
+									</button><br>
+									
+									<?php
+										$query = 'SELECT * FROM kategorijos';
+										$result = mysqli_query($dbc, $query);
+										while($row=mysqli_fetch_assoc($result)){
+											$kategorijos_pavadinimas = $row['pavadinimas'];
+											$query2 = "SELECT * FROM memai_kategorijos WHERE fk_kategorijos_pavadinimas='$kategorijos_pavadinimas' AND fk_memo_id='$postId'";
+											$num_rows = '0'; // nusinuliname eiluciu kieki pries tikrinant
+											$result2 = mysqli_query($dbc, $query2);
+											$num_rows = mysqli_num_rows($result2);
+											if($num_rows == 1) {
+												$isChecked='checked';
+											} else {
+												$isChecked='';
+											}
+											// jei gauta viena eilute rezultate, pazymima checked
+											echo "<input type='checkbox' name='checkbox-", $kategorijos_pavadinimas, "' ", $isChecked, '> ', $kategorijos_pavadinimas, '<br>';
+											
+										}
+									?>
 								</form>
 							</h3>
                         </div>
                         <div class="meme-image">
-                            <img src="<?php echo htmlentities($nuoroda);?>" alt="Smiley face">
+							<?php
+								echo '<img src="'.htmlentities($nuoroda).'" alt="'.htmlentities($pavadinimas).'">';
+							?>
                         </div>
                         <p class="post-meta">
                             <a class="point badge-evt">
@@ -106,13 +123,30 @@
 <?php
 	if(isset($_POST["submit"])) {		
 		$naujas_pavadinimas=$_POST['edit_meme-title'];
-
 		if ($sql = $dbc->prepare("UPDATE memai SET pavadinimas = ? WHERE id = ?")) {
 			$sql->bind_param("ss", $naujas_pavadinimas, $postId);
 			$sql->execute();
 			$sql->close();
 		}
-		$message = "Pavadinimas sėkmingai pakeistas!";
+		// kategoriju suzymejimas
+		if($sql = $dbc->prepare("DELETE FROM memai_kategorijos WHERE fk_memo_id = ?")) {
+			$sql->bind_param("i", $postId);
+			$sql->execute();
+			$sql->close();
+		}
+		
+		$query_categories = "SELECT * FROM kategorijos";
+		$result = mysqli_query($dbc, $query_categories);
+		while($row=mysqli_fetch_assoc($result)){
+			if($_POST["checkbox-{$row['pavadinimas']}"] == 'on'){ // jei checkbox'ai buvo pazymeti, priskiriame mema kategorijoms
+				if($sql = $dbc->prepare("INSERT INTO memai_kategorijos (fk_kategorijos_pavadinimas, fk_memo_id) VALUES (?, ?)")){
+					$sql->bind_param("si", $row['pavadinimas'], $postId);
+					$sql->execute();
+					$sql->close();
+				}
+			}
+		}
+		$message = "Pavadinimas ir kategorijos sėkmingai pakeistos!";
 		echo "<script type='text/javascript'>alert('$message');location='edit.php?postId=$postId';</script>";
 	}
 ?>
