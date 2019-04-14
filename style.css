@@ -301,7 +301,7 @@ footer{
 /* Stilius komentarø puslapiui */
 
 .meme-comments{
-  min-height: 360px;
+  min-height: 200px;
   float: left;
   position: relative;
   width: 100%;
@@ -319,20 +319,23 @@ footer{
 .comment-username{
   font-family: sans-serif;
   width: 100%;
-  height: 25px;
+  height: 35px;
   resize: none;
   cursor: text;
   border: 2px solid var(--navigation-color);
   margin-bottom: 5px;
+  padding: 5px 10px;
 }
 
 .comment-text-area{
   font-family: sans-serif;
   width: 100%;
-  height: 50px;
+  height: 100px;
+  padding: 5px 10px;
   resize: none;
   cursor: text;
   border: 2px solid var(--navigation-color);
+  margin-bottom: 10px;
 }
 
 .top-bar, .middle-bar, .bottom-bar {
@@ -370,21 +373,26 @@ footer{
   color: #fff;
   background-color: var(--navigation-color);
   border: 1px var(--navigation-color);
-  border-radius: 3px;
   text-align: center;
   cursor: pointer;
   height: 30px;
-  padding: 4px 15px;
+  padding: 5px 20px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.comment-post-btn:hover{
+  background-color: var(--navigation-hover);
 }
 
 .comment-entry {
-  padding: 5px 5px;
+  /*padding: 5px 5px;*/
   width: 100%;
 }
 
 .username-date {
-  font-weight: 700;
-  font-size: 12px;
+  font-weight: 600;
+  font-size: 13px;
 }
 
 .date{
@@ -398,13 +406,14 @@ footer{
   word-break: hard;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  border-bottom: 1px solid var(--navigation-color);
+  /*border-bottom: 1px solid var(--navigation-color);*/
 }
 
 /* Stilius edit ir delete mygtukams */
 
 #edit_meme_button {
-  color:brown; opacity:0.5;
+  color:brown; 
+  opacity:0.5;
 }
 
 #edit_meme_button:hover {
@@ -412,13 +421,13 @@ footer{
 }
 
 #delete_meme_button {
-  color:red; opacity:0.5;
+  color:red; 
+  opacity:0.5;
 }
 
 #delete_meme_button:hover {
   opacity:1;
 }
-
 
 /* Stilius admin prisijungimo langui */
 
@@ -483,8 +492,8 @@ footer{
 hr{
   border: 0;
   height: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(0, 153, 204, 0.1);
+  border-bottom: 1px solid rgb(0, 153, 204);
 }
 
 .meniu-close{

@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <script async defer src="https://connect.facebook.net/lt_LT/sdk.js#xfbml=1&version=v3.2"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/lt_LT/sdk.js#xfbml=1&version=v3.2&appId=803435083363148&autoLogAppEvents=1"></script>
 </head>
 <body>
     <div id="wrapper">
@@ -37,8 +39,10 @@
                             <?php
 								$query = "SELECT * FROM kategorijos";
 								$result = mysqli_query($dbc, $query);
+								$categoriesArray = array();
 								while($row=mysqli_fetch_assoc($result))
 								{						
+								 	array_push($categoriesArray, $row['pavadinimas']); 		
 							?>
 			   
 							<li class="category-item">
@@ -65,7 +69,7 @@
 									if(isset($_SESSION['vartotojo_vardas'])) { // jeigu administratorius - rodyti edit ir delete
 								?>
 									<a href="edit.php?postId=<?php echo $postId; ?>" id='edit_meme_button'><i class="fas fa-pen"></i></a>
-									<a href="delete_meme.php?postId=<?php echo $postId; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite ðalinti memà ir visus jo komentarus? Duomenys bus iðtrinti negráþtamai!')"><i class="fas fa-trash"></i></a>
+									<a href="delete_meme.php?postId=<?php echo $postId; ?>" id='delete_meme_button' onclick="return confirm('Ar tikrai norite ï¿½alinti memï¿½ ir visus jo komentarus? Duomenys bus iï¿½trinti negrï¿½ï¿½tamai!')"><i class="fas fa-trash"></i></a>
 								<?php } ?>
 							</h3>
                         </div>
@@ -87,14 +91,14 @@
                             </a>
                         </p>
 						<div class="meme-buttons">
-							<div class="control-button">
+							<div class="control-button voting upvote" data-upvote-id=<?php echo $id; ?>>
 								<i class="fas fa-arrow-up"></i>
 							</div>
-							<div class="control-button center-button">
+							<div class="control-button voting center-button downvote" data-downvote-id=<?php echo $id; ?>>
 								<i class="fas fa-arrow-down"></i>
 							</div>
-							<div class="control-button right-button" onclick="google.com">
-								<i class="fas fa-comment"></i>
+							<div class="control-button right-button" id="komentarai-<?php echo $id; ?>" style="background-color: rgb(5, 100, 149); border-color: rgb(5, 100, 149); pointer-events: none;">
+								<i class="fas fa-comment" style="color:white;"></i>
 							</div>
 						</div>
 						<hr>
@@ -133,7 +137,7 @@
 									</div>
 								</div>
 							</div>
-							
+							<hr>
 							<?php
 								}	// uzdarome komentaru while cikla
 								$stmt2->close();
@@ -152,7 +156,7 @@
 					?>
                 </div>
                 <div class="sidebar-column">
-                    <div style="height: 200px; background: white;"></div>
+					<div class="fb-group" data-href="https://www.facebook.com/groups/ayearofrunning/" data-width="280" data-show-social-context="false" data-show-metadata="true"></div>
                 </div>
             </div>
 			<?php
@@ -161,6 +165,10 @@
         </main>
     </div>
 </body>
+<script>
+    var categoriesArray = <?php echo json_encode($categoriesArray); ?>
+</script>
+<script src="js/memteka.js"></script>
 </html>
 
 <?php
@@ -172,12 +180,12 @@
 		//$_SESSION['create_course_aprasymas'] = $aprasymas;					// kad nedingtu ivestas aprasymas
   
 		if (empty($vardas)) {
-			//$_SESSION['error_create_course_pavadinimas'] = "Áveskite pavadinimà";
+			//$_SESSION['error_create_course_pavadinimas'] = "ï¿½veskite pavadinimï¿½";
 			$errors++;
 		}
 		
 		if (empty($komentaras)) {
-			//$_SESSION['error_create_course_aprasymas'] = "Áveskite apraðymà";
+			//$_SESSION['error_create_course_aprasymas'] = "ï¿½veskite apraï¿½ymï¿½";
 			$errors++;
 		}
 		

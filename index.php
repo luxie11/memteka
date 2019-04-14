@@ -82,10 +82,10 @@
                                     </a>
                                 </p>
                                 <div class="meme-buttons">
-                                    <div class="control-button upvote" data-upvote-id=<?php echo $id; ?>>
+                                    <div class="control-button voting upvote" data-upvote-id=<?php echo $id; ?>>
                                         <i class="fas fa-arrow-up"></i>
                                     </div>
-                                    <div class="control-button center-button downvote" data-downvote-id=<?php echo $id; ?>>
+                                    <div class="control-button voting center-button downvote" data-downvote-id=<?php echo $id; ?>>
                                         <i class="fas fa-arrow-down"></i>
                                     </div>
                                     <div class="control-button right-button" id="komentarai-<?php echo $id; ?>">
@@ -104,7 +104,7 @@
 						?>
                 </div>
                 <div class="sidebar-column">
-                    <div class="fb-group" data-href="https://www.facebook.com/groups/ayearofrunning/" data-width="280" data-show-social-context="false" data-show-metadata="false"></div> <!-- REIKIA FB ! -->
+                    <div class="fb-group" data-href="https://www.facebook.com/groups/ayearofrunning/" data-width="280" data-show-social-context="false" data-show-metadata="true"></div> <!-- REIKIA FB ! -->
                 </div>
             </div>
 			<?php
