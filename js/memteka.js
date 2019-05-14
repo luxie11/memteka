@@ -1,7 +1,7 @@
 /***
  * Sausainiu kontroleris
  */
-(function(){
+var cookiesController = (function(){
 
 //Mygtuku masyvas, imamas is viso page
 var buttonArray = document.querySelectorAll('.control-button.voting');
@@ -35,67 +35,69 @@ function getCookie(){
 /**
  * Paspausto mygtuko disablinimas ir cookie sukurimas jei jis reikalingas
  */
-buttonArray.forEach(el => el.addEventListener('click',()=>{
-    //Kintamieji naudojami apdoroti duomenis
-    var anchorArray =  el.parentNode.parentNode.querySelector('.post-meta > a.point').innerHTML;
-    var points = anchorArray.trim().split('>');
-    var pointsElement = points[1].trim().split(' ');
-    var pointsInt = parseInt(pointsElement[0]);
-
-    //Sausainio apdorojimas 
-    var userJSON = getCookie();
-    if(userJSON == null){
-            userJSON = {
-                date: new Date(),
-                memeButton: []
+function buttonAction(buttonArr){
+    buttonArr.forEach(el => el.addEventListener('click',()=>{
+        //Kintamieji naudojami apdoroti duomenis
+        var anchorArray =  el.parentNode.parentNode.querySelector('.post-meta > a.point').innerHTML;
+        var points = anchorArray.trim().split('>');
+        var pointsElement = points[1].trim().split(' ');
+        var pointsInt = parseInt(pointsElement[0]);
+    
+        //Sausainio apdorojimas 
+        var userJSON = getCookie();
+        if(userJSON == null){
+                userJSON = {
+                    date: new Date(),
+                    memeButton: []
+            }
         }
-    }
-
-    var memeButtonID;
-    var memePostID;
-    if(el.classList.contains('upvote')){
-        el.parentNode.childNodes[3].style.pointerEvents = "auto";
-        memeButtonID = "data-upvote-id=" + el.parentNode.childNodes[1].getAttribute("data-upvote-id");
-        memePostID = el.parentNode.childNodes[1].getAttribute("data-upvote-id");
-
-        if(userJSON.memeButton.indexOf("data-downvote-id=" + memePostID) !== -1 && getCookie()){
-            userJSON = removeCookieElement(el.parentNode.childNodes[1],"data-upvote-id");
-            pointsInt+=2;
-        } else{
-            pointsInt++;
+    
+        var memeButtonID;
+        var memePostID;
+        if(el.classList.contains('upvote')){
+            el.parentNode.childNodes[3].style.pointerEvents = "auto";
+            memeButtonID = "data-upvote-id=" + el.parentNode.childNodes[1].getAttribute("data-upvote-id");
+            memePostID = el.parentNode.childNodes[1].getAttribute("data-upvote-id");
+    
+            if(userJSON.memeButton.indexOf("data-downvote-id=" + memePostID) !== -1 && getCookie()){
+                userJSON = removeCookieElement(el.parentNode.childNodes[1],"data-upvote-id");
+                pointsInt+=2;
+            } else{
+                pointsInt++;
+            }
+    
+            changeColorAfterClick(el.parentNode.childNodes[3],"white","#4e2187","#4e2187");
+            changeColorAfterClick(el,"#4e2187","#4e2187","white");
+        } else if(el.classList.contains('downvote')){
+            el.parentNode.childNodes[1].style.pointerEvents = "auto";
+            memeButtonID = "data-downvote-id=" + el.parentNode.childNodes[3].getAttribute("data-downvote-id");
+            memePostID = el.parentNode.childNodes[3].getAttribute("data-downvote-id");
+    
+            if(userJSON.memeButton.indexOf("data-upvote-id=" + memePostID) !== -1 && getCookie()){
+                userJSON = removeCookieElement(el.parentNode.childNodes[3],"data-downvote-id");
+                pointsInt-=2;
+            } else{
+                pointsInt--;
+            }
+    
+            changeColorAfterClick(el.parentNode.childNodes[1],"white","#4e2187","#4e2187");
+            changeColorAfterClick(el,"#4e2187","#4e2187","white");
         }
+        el.style.pointerEvents = "none";
+        updateMemeVotes(memePostID,pointsInt);
+    
+        //Sukuriamas cookie vartotojui 
+        userJSON.memeButton.push(memeButtonID);
+        var jsonString = JSON.stringify(userJSON);
 
-        changeColorAfterClick(el.parentNode.childNodes[3],"white","#0099cc","#0099cc");
-        changeColorAfterClick(el,"#056495","#056495","white");
-    } else if(el.classList.contains('downvote')){
-        el.parentNode.childNodes[1].style.pointerEvents = "auto";
-        memeButtonID = "data-downvote-id=" + el.parentNode.childNodes[3].getAttribute("data-downvote-id");
-        memePostID = el.parentNode.childNodes[3].getAttribute("data-downvote-id");
-
-        if(userJSON.memeButton.indexOf("data-upvote-id=" + memePostID) !== -1 && getCookie()){
-            userJSON = removeCookieElement(el.parentNode.childNodes[3],"data-downvote-id");
-            pointsInt-=2;
-        } else{
-            pointsInt--;
-        }
-
-        changeColorAfterClick(el.parentNode.childNodes[1],"white","#0099cc","#0099cc");
-        changeColorAfterClick(el,"#056495","#056495","white");
-    }
-    el.style.pointerEvents = "none";
-    updateMemeVotes(memePostID,pointsInt);
-
-    //Sukuriamas cookie vartotojui 
-    userJSON.memeButton.push(memeButtonID);
-    var jsonString = JSON.stringify(userJSON);
-    setCookie(jsonString);
-
-    //Tasku atvaizdavimas vartotojo sasajoje
-    points[1] = ' ' + pointsInt + " taškų"; 
-    var string = points.join('>');
-    el.parentNode.parentNode.querySelector('.post-meta > a.point').innerHTML = string;
-
-}));
+        setCookie(jsonString);
+    
+        //Tasku atvaizdavimas vartotojo sasajoje
+        points[1] = ' ' + pointsInt + " taškų"; 
+        var string = points.join('>');
+        el.parentNode.parentNode.querySelector('.post-meta > a.point').innerHTML = string;
+    }));
+}
 
 function removeCookieElement(pressedButton, type){
     var jsonObject = getCookie();
@@ -104,7 +106,7 @@ function removeCookieElement(pressedButton, type){
         var buttonId = pressedButton.getAttribute(type);
         if((buttonId === buttonElement[1] && pressedButton.classList.contains('upvote')) || 
            (buttonId === buttonElement[1] && pressedButton.classList.contains('downvote'))){
-            jsonObject.memeButton.splice(i);
+            jsonObject.memeButton.splice(i,1);
         } 
     }
     return jsonObject;
@@ -127,7 +129,6 @@ function updateMemeVotes(memePostID,votesNumber){
  */
 function disableButtons(){
     var jsonObject = getCookie();
-    //jsonObject.memeButton.forEach(el => {console.log(el)});
     jsonObject.memeButton.forEach(el => {
         var buttonElement = el.split('=');
         buttonElement[1] = '"' + buttonElement[1] + '"';
@@ -135,25 +136,44 @@ function disableButtons(){
         var element = document.querySelector(`[${elementAttribute}]`);
         if(element){
             if(buttonElement[0] === "data-upvote-id"){
-                changeColorAfterClick(element,"#056495","#056495","white");
+                changeColorAfterClick(element,"#4e2187","#4e2187","white");
             } else if(buttonElement[0] === "data-downvote-id"){
-                changeColorAfterClick(element,"#056495","#056495","white");
+                changeColorAfterClick(element,"#4e2187","#4e2187","white");
             }        
             element.style.pointerEvents = "none";
         }
     });
 }
+var commentsButton = function(id){
+    id.forEach(el => {
+        document.getElementById(`komentarai-${el}`).addEventListener('click', function(){
+            window.open(`comments.php?postId=${el}`,'_blank');
+        })
+    })
+}
 
+buttonAction(buttonArray);
 if(getCookie()){
     disableButtons();
 }
+
+return{
+    init: function(buttonElements,idArray){
+        buttonAction(buttonElements);
+        if(getCookie()){
+            disableButtons();
+        }
+        commentsButton(idArray)
+    }
+}
+
 })();
 
 
 /***
  * Mobilaus meniu controleris
  */
-(function(){
+var mobileController = (function(){
     var navMenu = document.querySelector('.mobile-menu-background');
 
     function windowOnClick(event) {
@@ -175,8 +195,9 @@ if(getCookie()){
     var menuDIV = document.querySelector('.mobile-menu-content  > ul > #categories-hr');
     var liElement = [];
     for(var i =0; i < categoriesArray.length; i++){
+        var link = categoriesArray[i].toLowerCase();
         var liElement = `<li class="mobile-menu-item">
-                            <a>${categoriesArray[i]}</a>
+                            <a href="${link}">${categoriesArray[i]}</a>
                         </li>`;
         menuDIV.insertAdjacentHTML('beforeend',liElement);
     }

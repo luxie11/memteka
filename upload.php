@@ -5,7 +5,8 @@
     <title>Memteka</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <script async defer src="https://connect.facebook.net/lt_LT/sdk.js#xfbml=1&version=v3.2"></script>
+	<script async defer src="https://connect.facebook.net/lt_LT/sdk.js#xfbml=1&version=v3.2"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
         footer{
             position:absolute;
@@ -15,6 +16,8 @@
 <body>
     <div id="wrapper">
         <?php
+			session_start();
+			ob_start();
 			include("includes/header.php");
 			if(!isset($_SESSION['vartotojo_vardas'])) 	// jei jungiasi ne administratorius, grazina i index.php
 			{
@@ -46,26 +49,30 @@
                 </div>
                 <div class="main-column">
                     <div class="meme-upload">
-                        <form method="post" enctype="multipart/form-data">
-                            Pasirinkite nuotrauką, kurią norite įkelti:<br>
+					<form method="post" enctype="multipart/form-data">
+                            <label style="font-size: 17px"> Pasirinkite nuotrauką, kurią norite įkelti: </label><br>
+							<label for="fileToUpload" class="custom-file-upload">
+								<i class="fas fa-file-upload"></i> Failo pasirinkimas
+							</label>
                             <input type="file" name="fileToUpload" id="fileToUpload" accept="image/gif, image/jpeg, image/jpg"><br>
-                            Nuotraukos pavadinimas:
-                            <input type="text" name="pavadinimas" id="pavadinimas" maxlength="255"><br>
-							Pasirinkite kategorijas:<br>
+							<img id="preview" src="#" alt=" " style="width: 100%; height: 100%; " /><br>
+                            <label style="font-size: 17px;"> Nuotraukos pavadinimas: </label>
+                            <input class="upload-input" type="text" name="pavadinimas" id="pavadinimas" maxlength="255" required><br>
+							<label style="font-size: 17px;line-height: 50px;"> Pasirinkite kategorijas: </label><br>
 							<?php
 								$query = 'SELECT * FROM kategorijos';
 								$result = mysqli_query($dbc, $query);
 								while($row=mysqli_fetch_assoc($result)){
 									$kategorijos_pavadinimas = $row['pavadinimas'];
-									echo "<input type='checkbox' name='checkbox-", $kategorijos_pavadinimas, "'> ", $kategorijos_pavadinimas, '<br>';			
+									echo "<label class=\"checkbox-container\"> <input type='checkbox' name='checkbox-", $kategorijos_pavadinimas, "'> <span class=\"checkmark\"></span>", $kategorijos_pavadinimas, "</label>";			
 								}
 							?>
-                            <input type="submit" value="Įkelti memą" name="submit">
+                            <input class="upload-button" type="submit" value="Įkelti memą" name="submit">
                         </form>
                     </div>
                 </div>
                 <div class="sidebar-column">
-                    <div style="height: 200px; background: white;">
+				<div class="fb-page" data-href="https://www.facebook.com/memtekalt" data-tabs="timeline" data-width="500" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/memtekalt" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/memtekalt">Memteka</a></blockquote></div>
                     </div>
                 </div>
             </div>
@@ -73,27 +80,30 @@
         <?php include("includes/footer.php"); ?>
     </div>
 </body>
+<script src="js/preview.js"></script>
 </html>
 
 <?php	
+
 	if(isset($_POST["submit"])) {
 		$message = '';
-		$katalogas = "uploads/"; // nurodom kataloga, kuriame bus patalpintas failas
-		$failas = $katalogas . basename($_FILES["fileToUpload"]["name"]); // aprasomas kelias iki failo
+		$date = date("Y-m");
+		if(!file_exists("uploads/".$date)){
+			mkdir("uploads/".$date);
+		}
+		$katalogas = "uploads/".$date."/"; // nurodom kataloga, kuriame bus patalpintas failas
+		$dateUpload = date('Y-m-d H:i:s', time());
+		$failas = $katalogas . sha1($dateUpload)  . "." . basename($_FILES["fileToUpload"]["type"]); // aprasomas kelias iki failo
+		echo "<script type='text/javascript'>alert('$failas');</script>"; // issoka alert
 		$uploadOk = 1; // pradzioje klaidu nera, todel 1 (kai bus klaida bus 0)
 		$imageFileType = strtolower(pathinfo($failas,PATHINFO_EXTENSION));
+		
 		// Tikrinti ar failas yra nuotrauka
 		$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-		if($check != false) { // failas nėra nuotrauka
-			$message = 'Atsiprašome, tačiau įkeltas failas nėra nuotrauka.';
-			echo "<script type='text/javascript'>alert('$message');</script>"; // issoka alert
+		if($check != false) { // failas yraa nuotrauka
 			$uploadOk = 1;
-		} else { // failas yra nuotrauka
-			$uploadOk = 0;
-		}
-		// Tikrinti ar failas egzistuoja
-		if (file_exists($failas)) {
-			$message = 'Atsiprašome, failas jau egzistuoja.';
+		} else { // failas nera nuotrauka
+			$message = 'Atsiprašome, tačiau įkeltas failas nėra nuotrauka.';
 			echo "<script type='text/javascript'>alert('$message');</script>"; // issoka alert
 			$uploadOk = 0;
 		}
@@ -111,16 +121,12 @@
 		}
 		// Tikrinti ar $uploadOk yra 0 del klaidu
 		if ($uploadOk == 0) {
-			$message = 'Atsiprašome, failo įkelti nepavyko.';
-			echo "<script type='text/javascript'>alert('$message');</script>"; // issoka alert
 		// Jei viskas gerai, bandyti ikelti faila
 		} else {
 			if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $failas)) {
-				echo "Failas ". basename( $_FILES["fileToUpload"]["name"]). " sėkmingai patalpintas.";
-				
+				$memePostDate = date("Y-m-d H:i:s");
 				$pavadinimas = $_POST['pavadinimas'];
 				date_default_timezone_set('Europe/Vilnius');
-				$data = date('Y-m-d H:i:s', time());
 				$vartotojas = $_SESSION['vartotojo_vardas']; // ikele admin
 				
 				$query = "INSERT INTO memai (pavadinimas, nuoroda, tasku_kiekis, komentaru_kiekis, data, fk_vartotojo_vardas)
@@ -131,9 +137,11 @@
 					$query_categories = "SELECT * FROM kategorijos";
 					$result = mysqli_query($dbc, $query_categories);
 					while($row=mysqli_fetch_assoc($result)){
-						if($_POST["checkbox-{$row['pavadinimas']}"] == 'on'){ // jei checkbox'ai buvo pazymeti, priskiriame mema kategorijoms
-							$query_cat_meme = "INSERT INTO memai_kategorijos (fk_kategorijos_pavadinimas, fk_memo_id) VALUES ('{$row['pavadinimas']}', '$last_id')";
-							mysqli_query($dbc, $query_cat_meme);
+						if (isset($_POST["checkbox-{$row['pavadinimas']}"])) { // patikriname ar checkbox nera null
+							if($_POST["checkbox-{$row['pavadinimas']}"] == 'on'){ // jei checkbox'ai buvo pazymeti, priskiriame mema kategorijoms
+								$query_cat_meme = "INSERT INTO memai_kategorijos (fk_kategorijos_pavadinimas, fk_memo_id) VALUES ('{$row['pavadinimas']}', '$last_id')";
+								mysqli_query($dbc, $query_cat_meme);
+							}
 						}
 					}
 					$message = 'Failą įkelti pavyko sėkmingai!';

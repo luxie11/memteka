@@ -12,10 +12,11 @@
 <body>
     <div id="wrapper">
 		<?php
+			session_start();
 			ob_start();
 			
 			if(!isset($_GET['postId'])) {  // jeigu zmogus ateina i comments.php be GET parametro ?postId=x
-				header('Location: index.php');
+				header('Location: /');
 			}
 			
 			include("includes/header.php");
@@ -46,7 +47,7 @@
 							?>
 			   
 							<li class="category-item">
-								<a><?php echo htmlentities($row['pavadinimas']); ?></a>
+								<a href="<?php echo strtolower(htmlentities($row['pavadinimas'])); ?>"><?php echo htmlentities($row['pavadinimas']); ?></a>
 							</li>
 							<?php
 								} // cia uzdarome category-item while cikla
@@ -97,7 +98,7 @@
 							<div class="control-button voting center-button downvote" data-downvote-id=<?php echo $id; ?>>
 								<i class="fas fa-arrow-down"></i>
 							</div>
-							<div class="control-button right-button" id="komentarai-<?php echo $id; ?>" style="background-color: rgb(5, 100, 149); border-color: rgb(5, 100, 149); pointer-events: none;">
+							<div class="control-button right-button" id="komentarai-<?php echo $id; ?>" style="background-color: var(--navigation-color); border-color: var(--navigation-color); pointer-events: none;">
 								<i class="fas fa-comment" style="color:white;"></i>
 							</div>
 						</div>
@@ -109,6 +110,7 @@
 										<textarea placeholder="J&#363s&#371 vardas" name="vardas" maxlength="32" class="comment-username" required></textarea>
 										<textarea placeholder="J&#363s&#371 komentaras" name="komentaras" maxlength="255" class="comment-text-area" required></textarea>
 										<div class="action">
+											<input type="text" name="email"  style="width:0; height:0; visibility:hidden; border: 0;">
 											<input type="submit" class="comment-post-btn" name="submit" value="Ra&#353yti">
 										</div>
 									</form>
@@ -156,7 +158,7 @@
 					?>
                 </div>
                 <div class="sidebar-column">
-					<div class="fb-group" data-href="https://www.facebook.com/groups/ayearofrunning/" data-width="280" data-show-social-context="false" data-show-metadata="true"></div>
+					<div class="fb-page" data-href="https://www.facebook.com/memtekalt/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/memtekalt/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/memtekalt/">Memteka</a></blockquote></div>
                 </div>
             </div>
 			<?php
@@ -172,7 +174,7 @@
 </html>
 
 <?php
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['submit']) && strlen($_POST['email']) == 0) {
 		$errors = 0; 
 		$vardas = mysqli_real_escape_string($dbc, $_POST['vardas']);
 		//$_SESSION['create_course_pavadinimas'] = $pavadinimas;				// kad nedingtu ivestas pavadinimas

@@ -9,13 +9,14 @@
 </head>
 <body>
     <div id="wrapper">
-        <?php
-		include("includes/header.php");
+		<?php
+		session_start();
 		ob_start();
-			if(!isset($_SESSION['vartotojo_vardas'])) 	// jei jungiasi ne administratorius, grazina i index.php
-			{
-				header("Location: index.php");
-			}
+		include("includes/header.php");
+		if(!isset($_SESSION['vartotojo_vardas'])) 	// jei jungiasi ne administratorius, grazina i index.php
+		{
+			header("Location: index.php");
+		}
 		?>
         <main>
             <div class="row-container">
@@ -53,13 +54,13 @@
                     <div class="meme-post">
                         <div class="meme-content">
 							<h3 class="meme-title">
-								<form method="post" enctype="multipart/form-data">
-									<input type="text" name="edit_meme-title" id="edit_meme-title" maxlength="255" value="<?php echo htmlentities($pavadinimas);?>" style="width:90%" required />
-									<button type="submit" name="submit" style="border:none; background:none; width:auto; padding:0;">
+							<form method="post" enctype="multipart/form-data">
+									<input class="edit-input" type="text" name="edit_meme-title" id="edit_meme-title" maxlength="255" value="<?php echo htmlentities($pavadinimas);?>" style="width:90%" required />
+									<button type="submit" name="submit" style="border:none; background:none; width:auto; padding:0 10px;">
 										<i class="fas fa-check" style="color:green; cursor:pointer; font-size:20px"></i>
 									</button><br>
-									
-									<?php
+									<label style="font-size: 17px; font-weight: normal;"> Pasirinkite kategorijas: </label><br>
+									<?php	
 										$query = 'SELECT * FROM kategorijos';
 										$result = mysqli_query($dbc, $query);
 										while($row=mysqli_fetch_assoc($result)){
@@ -74,7 +75,7 @@
 												$isChecked='';
 											}
 											// jei gauta viena eilute rezultate, pazymima checked
-											echo "<input type='checkbox' name='checkbox-", $kategorijos_pavadinimas, "' ", $isChecked, '> ', $kategorijos_pavadinimas, '<br>';
+											echo "<label class=\"checkbox-container\"> <input type='checkbox' name='checkbox-", $kategorijos_pavadinimas, "' ", $isChecked, '> <span class="checkmark"></span>', $kategorijos_pavadinimas, '</label>';
 											
 										}
 									?>
@@ -110,8 +111,8 @@
 					?>
                 </div>
                 <div class="sidebar-column">
-                    <div style="height: 200px; background: white;">
-                    </div>
+					<div class="fb-page" data-href="https://www.facebook.com/memtekalt" data-tabs="timeline" data-width="500" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/memtekalt" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/memtekalt">Memteka</a></blockquote></div>
+                </div>
                 </div>
             </div>
         </main>
@@ -149,4 +150,5 @@
 		$message = "Pavadinimas ir kategorijos sėkmingai pakeistos!";
 		echo "<script type='text/javascript'>alert('$message');location='edit.php?postId=$postId';</script>";
 	}
+
 ?>

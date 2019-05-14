@@ -15,6 +15,8 @@
 <body>
     <div id="wrapper">
         <?php
+        	session_start();
+            ob_start();
 			include("includes/header.php");
 			if(!isset($_SESSION['vartotojo_vardas'])) 	// jei jungiasi ne administratorius, grazina i index.php
 			{
@@ -47,15 +49,15 @@
                 <div class="main-column">
                     <div class="meme-upload">
                         <form method="post" enctype="multipart/form-data">
-                            Įrašykite naujos kategorijos pavadinimą:
-                            <input type="text" name="kategorija" id="kategorija" maxlength="255"><br>
-                            <input type="submit" value="Patvirtinti" name="submit">
+                            <label style="font-size: 17px"> Įrašykite naujos kategorijos pavadinimą: </label>
+                            <input class="new-category-input" type="text" name="kategorija" id="kategorija" maxlength="255" required><br>
+                            <input class="new-category-button" type="submit" value="Patvirtinti" name="submit">
                         </form>
                     </div>
                 </div>
                 <div class="sidebar-column">
-                    <div style="height: 200px; background: white;">
-                    </div>
+                    <div class="fb-page" data-href="https://www.facebook.com/memtekalt" data-tabs="timeline" data-width="500" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/memtekalt" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/memtekalt">Memteka</a></blockquote></div>
+                </div>
                 </div>
             </div>
         </main>

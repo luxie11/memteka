@@ -1,11 +1,24 @@
 :root{
   /*Pagrindines spalvos duomenys --pagrindine-spalva:#fff*/
   --body-color:#E0E0E0;
-  --navigation-color:#0099cc;
-  --navigation-hover:#056495;
-  --footer-color:#054095;
+  --navigation-color:#4e2187;
+  --navigation-hover:#ffe58f;
+  --footer-color:#4e2187;
   --testas:red;
   --div-color:white;
+}
+
+
+
+#site-logo:hover > a > svg > #layer101 {
+
+  fill: #ffe58f;
+
+}
+
+.fb_iframe_widget {
+  display: inline-block;
+  position: fixed !important;
 }
 
 *, ::after, ::before {
@@ -22,6 +35,7 @@ html{
   margin: 0;
   height: 100%;
   overflow-x: hidden;
+  display: block;
 }
 
 body{
@@ -34,19 +48,20 @@ body{
    bottom:0; 
    right:0;
    width:100%;
+   display: block;
 }
 
 main{
-  display: block;
+
   overflow: auto;
 }
 
 footer{
-  position: relative;
+  position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 50px;
+  height: 60px;
   display: flex;
 }
 
@@ -57,6 +72,9 @@ footer{
   justify-content: center;
   align-items: center;
 }
+.category-item > a{
+  color:#4e2187;
+}
 
 .row-container{
   display:-ms-flexbox;
@@ -65,6 +83,7 @@ footer{
   flex-wrap:wrap;
   height: 100%;
   margin: 5%;
+  margin-bottom: 75px;
 }
 
 #header{
@@ -81,12 +100,27 @@ footer{
    align-items: center;
    position: fixed;
    top: 0;
-   padding:0 5.8%;
+   padding:0 5%;
 }
 
 .navigation-items{
   float: left;
   width: 80%;
+}
+
+
+/*Loading div*/
+@keyframes spining {
+  0% { transform: rotate(0deg); }
+  100% {  transform: rotate(359deg); }
+}
+
+.loading{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 10px 0px;
+  animation: spining 0.7s linear infinite;
 }
 
 .nav-bar-item{
@@ -109,14 +143,13 @@ footer{
 .sidebar-column, .main-column{
   position:relative;
   width:100%;
-  padding-left:15px;
-  padding-right: 15px; 
 }
 
 #wrapper{
   margin: 0;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
+  position: relative;
 }
 
 #site-logo{
@@ -131,7 +164,7 @@ footer{
 }
 
 .active {
-  background-color: #0099cc;
+  background-color: #4e2187;
 }
 
 .header-icon:hover{
@@ -173,10 +206,11 @@ footer{
 }
 
 #sidebar{
-  width:  100%;
+  width:  22.5%;
   height: auto;
   background-color: var(--div-color);
   float: left;
+  position: fixed;
 }
 
 .main-column{
@@ -184,6 +218,8 @@ footer{
   -ms-flex:0 0 50%;
   flex:0 0 50%;
   max-width:50%;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .meme-image, .meme-image > img, .meme-image > video{
@@ -243,8 +279,8 @@ footer{
 }
 
 .control-button:hover{
-  border: 2px solid var(--navigation-hover);
-  background-color: var(--navigation-hover);
+  border: 2px solid var(--navigation-color);
+  background-color: var(--navigation-color);
 }
 
 .sidebar-column{
@@ -280,8 +316,9 @@ footer{
 
 .category-item > a , .mobile-menu-item > a{
   width: 100%;
-  font-size: 17px;
+  font-size: 19px;
   text-decoration: none;
+  font-weight: 500;
 }
 
 .category-item > a:hover , .mobile-menu-item > a:hover{
@@ -294,8 +331,8 @@ footer{
 }
 
 .category-item:hover, .mobile-menu-item:hover{
-  background-color: var(--navigation-hover);
-  color:white;
+  background-color: #e9dff6;
+  color: #4e2187;
 }
 
 /* Stilius komentarø puslapiui */
@@ -350,7 +387,7 @@ footer{
   -webkit-transform: rotate(-45deg) translate(-9px, 6px);
   transform: rotate(-45deg) translate(-9px, 6px);
   transition: transform 0.5s;
-  background-color: #0099cc;
+  background-color: var(--navigation-color);
 }
 
 .meniu-close  .middle-bar {opacity: 0;}
@@ -358,7 +395,7 @@ footer{
 .meniu-close  .bottom-bar {
   -webkit-transform: rotate(45deg) translate(-8px, -5px);
   transform: rotate(45deg) translate(-8px, -5px);
-  background-color: #0099cc;
+  background-color: var(--navigation-color);
   transition: transform 0.5s;
 }
 
@@ -382,7 +419,7 @@ footer{
 }
 
 .comment-post-btn:hover{
-  background-color: var(--navigation-hover);
+  background-color: #3a2553;
 }
 
 .comment-entry {
@@ -432,7 +469,7 @@ footer{
 /* Stilius admin prisijungimo langui */
 
 #login-form {
-  height: 350px;
+  height: 210px;
   width: 310px;
   position: absolute;
   left: 0;
@@ -463,7 +500,7 @@ footer{
 #login-button {
   height: 30px;
   width: 100%;
-  background-color: var(--body-color);
+  background-color: var(--navigation-color);
   border-radius: 10px;
   border: 2px solid var(--navigation-color);
 }
@@ -475,6 +512,242 @@ footer{
 
 .row-container{
   margin-top:70px; 
+}
+/* Stilius admin prisijungimo langui */
+
+#login-body{
+  font-family: sans-serif;
+  background: rgb(5,64,149);
+  background: linear-gradient(45deg, rgba(5,64,149,1) 0%, rgba(5,100,149,1) 35%, rgba(0,153,204,1) 100%);
+  margin: 0;
+  min-height: 100%;
+  position:absolute; 
+  top:0; 
+  bottom:0; 
+  right:0;
+  width:100%;
+}
+
+#login-form {
+  height: 210px;
+  width: 310px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  padding: 40px 40px 40px 40px;
+  background-color: #f0f0f0;
+  border-top: 2px solid var(--navigation-color);
+  border-radius: 10px;
+}
+
+#form-inputs {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#input {
+  float:left;
+  width: 100%;
+  border-radius: 5px;
+  border: none;
+  padding-left: 10px;
+  padding: 10px 25px;
+  margin-bottom: 10px;
+}
+
+#login-button {
+  height: 35px;
+  width: 100%;
+  background-color: var(--navigation-color);
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+#login-button:hover {
+  color: white;
+  border: 2px solid var(--navigation-hover);
+  background-color: var(--navigation-hover);
+  color: var(--navigation-color);
+}
+
+#mobile-nav {
+  display: none;
+  z-index: 999;
+}
+
+.row-container{
+  margin-top:70px; 
+}
+
+/* Stilius upload langui */
+
+input[type="file"]{
+  display: none;
+}
+
+.custom-file-upload{
+  border: 2px solid var(--navigation-color);
+  display: inline-block;
+  padding: 3px 12px;
+  font-size: 17px;
+  cursor: pointer;
+  color: var(--navigation-color);
+  margin-bottom: 10px;
+}
+
+.custom-file-upload > i{
+  padding: 3px;
+  color:var(--navigation-color);
+  font-size: 17px;
+}
+
+.custom-file-upload:hover i{
+  color: white;
+}
+
+.custom-file-upload:hover{
+  color: white;
+  border: 2px solid var(--navigation-color);
+  background-color: var(--navigation-color);
+}
+
+.upload-input {
+  float:left;
+  width: 100%;
+  border: 2px solid var(--navigation-color);
+  padding-left: 10px;
+  padding: 10px 25px;
+  margin-bottom: 10px;
+}
+
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: normal;
+  user-select: none;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 17px;
+  width: 17px;
+  background-color: #eee;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: var(--navigation-color);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-container .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.upload-button{
+  height: 35px;
+  width: 100%;
+  font-size: 17px;
+  background-color: var(--div-color);
+  color: var(--navigation-color);
+  border: 2px solid var(--navigation-color);
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.upload-button:hover{
+  color: white;
+  border: 2px solid var(--navigation-color);
+  background-color: var(--navigation-color);
+}
+
+/* Stilius kategorijos pridėjimo langui */
+
+.new-category-input {
+  float:left;
+  width: 100%;
+  border: 2px solid var(--navigation-color);
+  padding-left: 10px;
+  padding: 10px 25px;
+  margin-bottom: 10px;
+}
+
+
+#login-body{
+  font-family: sans-serif;
+  background: #4e2187;
+  background: linear-gradient(45deg, #4e2187 20%, #4e2187 50%, #714d9f 20%);
+  margin: 0;
+  min-height: 100%;
+  position:absolute; 
+  top:0; 
+  bottom:0; 
+  right:0;
+  width:100%;
+}
+
+.new-category-button{
+  height: 35px;
+  width: 100%;
+  font-size: 17px;
+  background-color: var(--div-color);
+  color: var(--navigation-color);
+  border: 2px solid var(--navigation-color);
+  cursor: pointer;
+}
+
+.new-category-button:hover{
+  color: white;
+  border: 2px solid var(--navigation-hover);
+  background-color: var(--navigation-hover);
+}
+/* Stilius edit langui */
+
+.edit-input {
+  float:left;
+  width: 90%;
+  border: 2px solid var(--navigation-color);
+  padding-left: 10px;
+  margin-bottom: 10px;
 }
 
 /*Mobile version*/
@@ -492,8 +765,8 @@ footer{
 hr{
   border: 0;
   height: 0;
-  border-top: 1px solid rgba(0, 153, 204, 0.1);
-  border-bottom: 1px solid rgb(0, 153, 204);
+  border-top: 1px solid var(--navigation-color);
+  border-bottom: 1px solid var(--navigation-color);
 }
 
 .meniu-close{
@@ -530,7 +803,7 @@ hr{
 }
 
 .mobile-menu-item:hover a{
-  color: white;
+  color: var(--navigation-color);
 }
 
 .mobile-social{
@@ -542,8 +815,12 @@ hr{
   margin-left: 10px;
 }
 
-.mobile-social > i{
-  color:#0099cc;
+.mobile-social:hover > i{
+  color:var(--navigation-color);
+}
+
+.mobile-social> i{
+  color:var(--navigation-color);
 }
 
 
@@ -601,7 +878,7 @@ hr{
     padding: 0 1.8%;
   }
   .row-container{
-    margin: 70px 0 0 0;
+    margin: 70px 0 70px 0;
   }
 
   .sidebar-column, .sidebar-column,.nav-bar-item, .nav-social-icons{
@@ -634,7 +911,7 @@ hr{
     padding: 0 2.3%;
   }
   .row-container{
-    margin: 70px 0px 0px 0px;
+    margin: 70px 0px 70px 0px;
   }
 
   #mobile-nav{
